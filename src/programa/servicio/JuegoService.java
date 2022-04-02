@@ -2,6 +2,7 @@ package programa.servicio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import programa.entidades.Juego;
 
@@ -10,8 +11,8 @@ public class JuegoService {
 	public Juego crearJuego() {
 
 		List<String> palabras = cargarPalabras();
-
-		return null;
+		String palabraRandom = palabraRandom(palabras.size(), palabras);
+		return new Juego(palabras, "español", palabraRandom);
 	}
 
 	public List<String> cargarPalabras() {
@@ -77,13 +78,6 @@ public class JuegoService {
 		return juego.getPalabraEnJuego().equals(input);
 	}
 
-//	private boolean soloQuedabaUnaLetra(Juego juego) {
-//		if (contarLetrasFaltantes(juego) == (juego.getPalabraEnJuego().length() - 1)) {
-//			return true;
-//		}
-//		return false;
-//	}
-
 	private int contarLetrasFaltantes(Juego juego) {
 		String palabraJuego = juego.getPalabraEnJuego();
 		int cont = 0;
@@ -96,4 +90,19 @@ public class JuegoService {
 		}
 		return cont;
 	}
+
+	private String palabraRandom(int max, List<String> palabras) {
+		final int min = 0;
+		Random random = new Random();
+		int value = random.nextInt(max + min) + min;
+		return palabras.get(value);
+	}
+
+//	private boolean soloQuedabaUnaLetra(Juego juego) {
+//	if (contarLetrasFaltantes(juego) == (juego.getPalabraEnJuego().length() - 1)) {
+//		return true;
+//	}
+//	return false;
+//}
+
 }

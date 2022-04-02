@@ -17,9 +17,8 @@ public class Juego {
 
 	}
 
-	public Juego(List<String> palabras, Usuario usuario, String idioma, String palabraEnJuego) {
+	public Juego(List<String> palabras, String idioma, String palabraEnJuego) {
 		this.palabras = palabras;
-		this.usuario = usuario;
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
 		this.letrasPorCompletar = new char[palabraEnJuego.length()];
