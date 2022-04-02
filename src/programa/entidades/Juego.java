@@ -6,6 +6,7 @@ public class Juego {
 
 	private List<String> palabras;
 	private String palabraEnJuego;
+	private char[] letrasPorCompletar;
 	private Usuario usuario;
 	private String idioma;
 
@@ -18,6 +19,7 @@ public class Juego {
 		this.usuario = usuario;
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
+		this.letrasPorCompletar = new char[palabraEnJuego.length()];
 	}
 
 	public List<String> getPalabras() {
@@ -50,6 +52,14 @@ public class Juego {
 
 	public void setPalabraEnJuego(String palabraEnJuego) {
 		this.palabraEnJuego = palabraEnJuego;
+	}
+
+	public char[] getLetras() {
+		return letrasPorCompletar;
+	}
+
+	public void setLetras(char[] letras) {
+		this.letrasPorCompletar = letras;
 	}
 
 }
