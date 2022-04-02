@@ -24,28 +24,40 @@ public class JuegoService {
 	public boolean buscarLetraOPalabraEnJuego(Juego juego, String input) {
 		String palabraJuego = juego.getPalabraEnJuego();
 		if (palabraJuego.length() != input.length() && input.length() != 1) {
-			restarPuntos(juego);
+			restarIntentos(juego);
 			return false;
 		}
-		if (gano(juego, input)) {
-			sumarPuntos(juego);
+		if (sonIguales(juego, input)) {
+			sumarPuntosPalabraCompleta(juego, input);
 			// Accionar
+		} else {
+			restarIntentos(juego);
 		}
 
 		if (buscar(juego, input)) {
-
+			sumarPuntos(juego, 1);
+			return true;
+		} else {
+			restarIntentos(juego);
 		}
 		return false;
 	}
 
-	private void restarPuntos(Juego juego) {
-
+	private void restarIntentos(Juego juego) {
+		juego.setIntentos(juego.getIntentos() - 1);
 	}
 
-	private void sumarPuntos(Juego juego) {
-		if (soloQuedabaUnaLetra(juego)) {
+	public boolean perdio(Juego juego) {
+		return juego.isEstadoJuego();
+	}
 
-		}
+	private void sumarPuntosPalabraCompleta(Juego juego, String input) {
+		int cantLetrasFaltantes = contarLetrasFaltantes(juego);
+		sumarPuntos(juego, cantLetrasFaltantes);
+	}
+
+	private void sumarPuntos(Juego juego, int multiplicador) {
+		juego.setPuntajeEnJuego(juego.getPuntajeEnJuego() + 50);
 	}
 
 	private boolean buscar(Juego juego, String input) {
@@ -61,16 +73,16 @@ public class JuegoService {
 
 	}
 
-	private boolean gano(Juego juego, String input) {
+	private boolean sonIguales(Juego juego, String input) {
 		return juego.getPalabraEnJuego().equals(input);
 	}
 
-	private boolean soloQuedabaUnaLetra(Juego juego) {
-		if (contarLetrasFaltantes(juego) == (juego.getPalabraEnJuego().length() - 1)) {
-			return true;
-		}
-		return false;
-	}
+//	private boolean soloQuedabaUnaLetra(Juego juego) {
+//		if (contarLetrasFaltantes(juego) == (juego.getPalabraEnJuego().length() - 1)) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	private int contarLetrasFaltantes(Juego juego) {
 		String palabraJuego = juego.getPalabraEnJuego();

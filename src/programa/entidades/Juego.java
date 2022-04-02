@@ -9,6 +9,9 @@ public class Juego {
 	private char[] letrasPorCompletar;
 	private Usuario usuario;
 	private String idioma;
+	private int puntajeEnJuego;
+	private int intentos;
+	private boolean estadoJuego;
 
 	public Juego() {
 
@@ -20,6 +23,9 @@ public class Juego {
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
 		this.letrasPorCompletar = new char[palabraEnJuego.length()];
+		this.puntajeEnJuego = 0;
+		this.intentos = 10;
+		this.estadoJuego = true;
 	}
 
 	public List<String> getPalabras() {
@@ -60,6 +66,38 @@ public class Juego {
 
 	public void setLetras(char[] letras) {
 		this.letrasPorCompletar = letras;
+	}
+
+	public char[] getLetrasPorCompletar() {
+		return letrasPorCompletar;
+	}
+
+	public void setLetrasPorCompletar(char[] letrasPorCompletar) {
+		this.letrasPorCompletar = letrasPorCompletar;
+	}
+
+	public int getPuntajeEnJuego() {
+		return puntajeEnJuego;
+	}
+
+	public void setPuntajeEnJuego(int puntajeEnJuego) {
+		this.puntajeEnJuego = puntajeEnJuego;
+	}
+
+	public int getIntentos() {
+		return intentos;
+	}
+
+	public void setIntentos(int intentos) {
+		this.intentos = intentos;
+	}
+
+	public boolean isEstadoJuego() {
+		return estadoJuego;
+	}
+
+	public void setEstadoJuego(boolean estadoJuego) {
+		this.estadoJuego = estadoJuego;
 	}
 
 }
