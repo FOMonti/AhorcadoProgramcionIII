@@ -1,10 +1,13 @@
 package programa.entidades;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Juego {
 
 	private List<String> palabras;
+	private Set<String> letrasMarcadas;
 	private String palabraEnJuego;
 	private char[] letrasPorCompletar;
 	private Usuario usuario;
@@ -21,10 +24,28 @@ public class Juego {
 		this.palabras = palabras;
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
-		this.letrasPorCompletar = new char[palabraEnJuego.length()];
 		this.puntajeEnJuego = 0;
 		this.intentos = 10;
 		this.estadoJuego = true;
+		this.setLetrasMarcadas(new HashSet<String>());
+		rellenarVacio(palabraEnJuego.length());
+	}
+
+	private void rellenarVacio(int longitud) {
+		this.letrasPorCompletar = new char[longitud];
+		for (int i = 0; i < longitud; i++) {
+			letrasPorCompletar[i] = '-';
+		}
+	}
+
+	public void rellenarLetra(char letra, int posicion) {
+		this.letrasPorCompletar[posicion] = letra;
+	}
+
+	public void rellenarPalabraCompleta() {
+		for (int i = 0; i < letrasPorCompletar.length; i++) {
+			letrasPorCompletar[i] = palabraEnJuego.charAt(i);
+		}
 	}
 
 	public List<String> getPalabras() {
@@ -97,6 +118,14 @@ public class Juego {
 
 	public void setEstadoJuego(boolean estadoJuego) {
 		this.estadoJuego = estadoJuego;
+	}
+
+	public Set<String> getLetrasMarcadas() {
+		return letrasMarcadas;
+	}
+
+	public void setLetrasMarcadas(Set<String> letrasMarcadas) {
+		this.letrasMarcadas = letrasMarcadas;
 	}
 
 }

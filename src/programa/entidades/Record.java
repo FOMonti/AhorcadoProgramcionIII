@@ -4,6 +4,7 @@ public class Record {
 
 	private int puntaje;
 	private boolean gano;
+	//private String palabra;
 
 	public Record(int puntaje, boolean gano) {
 		this.puntaje = puntaje;

@@ -9,6 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Interfaz {
 
 	private JFrame frame;
+	private JFrame frameTermino;
 
 	public static void main(String[] args) {
 		try {

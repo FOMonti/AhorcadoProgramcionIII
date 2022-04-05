@@ -8,8 +8,18 @@ import programa.entidades.Juego;
 
 public class JuegoService {
 
-	public Juego crearJuego() {
+	public static void main(String[] args) {
+		JuegoService juegoService = new JuegoService();
+		Juego juego = juegoService.crearJuego();
+		// System.out.println(juego.getPalabraEnJuego());
+		System.out.println(juego.getIntentos());
+		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
+		System.out.println(juego.getPuntajeEnJuego());
+		System.out.println(juego.getIntentos());
+		System.out.println(juego.getLetrasPorCompletar());
+	}
 
+	public Juego crearJuego() {
 		List<String> palabras = cargarPalabras();
 		String palabraRandom = palabraRandom(palabras.size(), palabras);
 		return new Juego(palabras, "español", palabraRandom);
@@ -17,30 +27,29 @@ public class JuegoService {
 
 	public List<String> cargarPalabras() {
 		List<String> palabras = new ArrayList<String>();
-		palabras.add("Palabra");
-
+		palabras.add("PALABRA");
+		palabras.add("PALABRA");
+		palabras.add("PALABRA");
 		return palabras;
 	}
 
 	public boolean buscarLetraOPalabraEnJuego(Juego juego, String input) {
 		String palabraJuego = juego.getPalabraEnJuego();
-		if (palabraJuego.length() != input.length() && input.length() != 1) {
-			restarIntentos(juego);
-			return false;
-		}
-		if (sonIguales(juego, input)) {
-			sumarPuntosPalabraCompleta(juego, input);
-			// Accionar
-		} else {
-			restarIntentos(juego);
-		}
-
-		if (buscar(juego, input)) {
-			sumarPuntos(juego, 1);
-			return true;
-		} else {
-			restarIntentos(juego);
-		}
+		if (input.length() == palabraJuego.length())
+			if (sonIguales(juego, input)) {
+				sumarPuntosPalabraCompleta(juego, input);
+				juego.rellenarPalabraCompleta();
+				juego.setEstadoJuego(false);
+				return true;
+			}
+		if (input.length() == 1)
+			if (!(posiciones(juego, input).isEmpty())) {
+				sumarPuntos(juego, 1);
+				return true;
+			}
+		restarIntentos(juego);
+		if (perdio(juego))
+			juego.setEstadoJuego(false);
 		return false;
 	}
 
@@ -58,20 +67,24 @@ public class JuegoService {
 	}
 
 	private void sumarPuntos(Juego juego, int multiplicador) {
-		juego.setPuntajeEnJuego(juego.getPuntajeEnJuego() + 50);
+		juego.setPuntajeEnJuego(juego.getPuntajeEnJuego() + (50 * multiplicador));
 	}
 
-	private boolean buscar(Juego juego, String input) {
-		String palabraJuego = juego.getPalabraEnJuego();
-		char inputLetra = input.charAt(0);
-		for (int i = 0; i < palabraJuego.length(); i++) {
-			char letra = palabraJuego.charAt(i);
-			if (letra == inputLetra) {
-				return true;
+	public List<Integer> posiciones(Juego juego, String input) {
+		List<Integer> posiciones = new ArrayList<Integer>();
+		if (!juego.getLetrasMarcadas().contains(input)) {
+			String palabraJuego = juego.getPalabraEnJuego();
+			char inputLetra = Character.toUpperCase(input.charAt(0));
+			for (int i = 0; i < palabraJuego.length(); i++) {
+				char letra = palabraJuego.charAt(i);
+				if (letra == inputLetra) {
+					juego.rellenarLetra(letra, i);
+					juego.getLetrasMarcadas().add(input);
+					posiciones.add(i);
+				}
 			}
 		}
-		return false;
-
+		return posiciones;
 	}
 
 	private boolean sonIguales(Juego juego, String input) {
@@ -84,7 +97,7 @@ public class JuegoService {
 		char[] letrasPorCompletar = juego.getLetras();
 		for (int i = 0; i < palabraJuego.length(); i++) {
 			char letra = palabraJuego.charAt(i);
-			if (letra == letrasPorCompletar[i]) {
+			if (letra != letrasPorCompletar[i]) {
 				cont++;
 			}
 		}
@@ -94,15 +107,8 @@ public class JuegoService {
 	private String palabraRandom(int max, List<String> palabras) {
 		final int min = 0;
 		Random random = new Random();
-		int value = random.nextInt(max + min) + min;
-		return palabras.get(value);
+		int valorRandom = random.nextInt(max + min) + min;
+		return palabras.get(valorRandom);
 	}
-
-//	private boolean soloQuedabaUnaLetra(Juego juego) {
-//	if (contarLetrasFaltantes(juego) == (juego.getPalabraEnJuego().length() - 1)) {
-//		return true;
-//	}
-//	return false;
-//}
 
 }
