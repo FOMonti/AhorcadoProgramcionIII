@@ -5,13 +5,13 @@ import java.util.List;
 public class Usuario {
 
 	private String nombre;
-	private String contraseña;
+	private String contrasena;
 	private List<Record> records;
 
-	public Usuario(String nombre, String contraseña, List<Record> records) {
+	public Usuario(String nombre, String contrasena, List<Record> records) {
 
 		this.nombre = nombre;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.records = records;
 	}
 
@@ -23,12 +23,12 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public List<Record> getRecords() {

@@ -8,21 +8,10 @@ import programa.entidades.Juego;
 
 public class JuegoService {
 
-	public static void main(String[] args) {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		// System.out.println(juego.getPalabraEnJuego());
-		System.out.println(juego.getIntentos());
-		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
-		System.out.println(juego.getPuntajeEnJuego());
-		System.out.println(juego.getIntentos());
-		System.out.println(juego.getLetrasPorCompletar());
-	}
-
 	public Juego crearJuego() {
 		List<String> palabras = cargarPalabras();
 		String palabraRandom = palabraRandom(palabras.size(), palabras);
-		return new Juego(palabras, "español", palabraRandom);
+		return new Juego(palabras, "espaï¿½ol", palabraRandom);
 	}
 
 	public List<String> cargarPalabras() {

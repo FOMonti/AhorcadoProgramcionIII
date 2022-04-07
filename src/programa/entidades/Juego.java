@@ -25,7 +25,7 @@ public class Juego {
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
 		this.puntajeEnJuego = 0;
-		this.intentos = 10;
+		this.intentos = 5;
 		this.estadoJuego = true;
 		this.setLetrasMarcadas(new HashSet<String>());
 		rellenarVacio(palabraEnJuego.length());
