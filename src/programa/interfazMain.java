@@ -14,15 +14,28 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
+import programa.entidades.Juego;
+import programa.servicio.JuegoService;
+
 public class interfazMain {
 
 	private JFrame frmJuegoDelAhorcado;
 	private JTextField userInput;
+	private JLabel lblTituloDelJuego;
+	private JLabel palabraEnJuego;
+	private JButton btnReset;
+	private JLabel lblIntentos;
+	private JLabel labelUserInput;
+	private JPanel palabraContainer;
+
+	private Juego juego;
+	private JuegoService juegoService = new JuegoService();
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,6 +59,8 @@ public class interfazMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		juego = juegoService.crearJuego();
+
 		frmJuegoDelAhorcado = new JFrame();
 		frmJuegoDelAhorcado.setTitle("Juego del Ahorcado - Programacion III");
 		frmJuegoDelAhorcado.setForeground(new Color(0, 0, 0));
@@ -55,85 +70,89 @@ public class interfazMain {
 		frmJuegoDelAhorcado.setBounds(100, 100, 1024, 673);
 		frmJuegoDelAhorcado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmJuegoDelAhorcado.getContentPane().setLayout(null);
-		
-		JLabel labelUserInput = new JLabel("Ingrese Letra o Palabra:");
+
+		labelUserInput = new JLabel("Ingrese Letra o Palabra:");
 		labelUserInput.setBackground(new Color(255, 255, 255));
 		labelUserInput.setForeground(new Color(255, 255, 255));
 		labelUserInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 33));
 		labelUserInput.setBounds(322, 444, 401, 101);
 		frmJuegoDelAhorcado.getContentPane().add(labelUserInput);
-		
+
 		userInput = new JTextField();
 		userInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		userInput.setBounds(413, 532, 186, 42);
 		frmJuegoDelAhorcado.getContentPane().add(userInput);
 		userInput.setColumns(10);
-		
-		
-		JPanel palabraContainer = new JPanel();
+
+		palabraContainer = new JPanel();
 		palabraContainer.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		palabraContainer.setBackground(new Color(51, 51, 102));
 		palabraContainer.setBounds(230, 300, 549, 128);
 		frmJuegoDelAhorcado.getContentPane().add(palabraContainer);
-		
-		JLabel palabraEnJuego = new JLabel("PA-A--A");
+
+		palabraEnJuego = new JLabel(juegoService.getPalabraJuego(juego));
 		palabraContainer.add(palabraEnJuego);
 		palabraEnJuego.setHorizontalAlignment(SwingConstants.CENTER);
 		palabraEnJuego.setForeground(new Color(255, 255, 255));
 		palabraEnJuego.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
-		
-		
-		JLabel lblIntentos = new JLabel("INTENTOS: 10");
+
+		lblIntentos = new JLabel(juegoService.getIntentos(juego));
 		lblIntentos.setForeground(new Color(204, 51, 51));
 		lblIntentos.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblIntentos.setBounds(10, 11, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblIntentos);
-		
-		
-		
-		JButton btnReset = new JButton("REINICIAR");
+
+		btnReset = new JButton("REINICIAR");
 		btnReset.setForeground(new Color(255, 255, 255));
 		btnReset.setBackground(new Color(51, 51, 102));
 		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		btnReset.setBounds(873, 15, 125, 51);
 		frmJuegoDelAhorcado.getContentPane().add(btnReset);
-		
-		
-		JLabel lblTituloDelJuego = new JLabel("Juego del Ahorcado");
+
+		lblTituloDelJuego = new JLabel("Juego del Ahorcado");
 		lblTituloDelJuego.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblTituloDelJuego.setForeground(new Color(255, 255, 255));
 		lblTituloDelJuego.setBounds(330, 191, 352, 66);
 		frmJuegoDelAhorcado.getContentPane().add(lblTituloDelJuego);
-		
-		
-		// Event listeners
-		
-		// ENTER DEL USUARIO
-		userInput.addActionListener(new ActionListener(){
 
-	           
+		// Event listeners
+
+		// ENTER DEL USUARIO
+		userInput.addActionListener(new ActionListener() {
+			// Cuando el usuario presiona ENTER al ingresar una palabra o letra
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				// Cuando el usuario presiona ENTER al ingresar una palabra o letra
-				// ....
-				lblIntentos.setText("INTENTOS: 9");
-				
-				
-				
-				
-			}});
-		
+
+				juegoService.buscarLetraOPalabraEnJuego(juego, userInput.getText());
+				palabraEnJuego.setText(juegoService.getPalabraJuego(juego));
+				limpiarInput();
+				limpiarIntentos();
+
+			}
+		});
+
 		// PRESIONAR BOTON RESET
-		btnReset.addActionListener(new ActionListener(){
-     
+		btnReset.addActionListener(new ActionListener() {
+
+			// Cuando el usuario hace CLICK en el boton de REINICIAR
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					
-				// Cuando el usuario hace CLICK en el boton de REINICIAR
-				// ....
-				palabraEnJuego.setText("------"); //obviamente reiniciar todo el frame desde logica
-							
-			}});
+
+				juego = juegoService.crearJuego();
+				palabraEnJuego.setText(juegoService.getPalabraJuego(juego));
+
+				limpiarInput();
+				limpiarIntentos();
+
+			}
+		});
+	}
+
+	private void limpiarIntentos() {
+		lblIntentos.setText(juegoService.getIntentos(juego));
+	}
+
+	private void limpiarInput() {
+		userInput.setText("");
 	}
 }

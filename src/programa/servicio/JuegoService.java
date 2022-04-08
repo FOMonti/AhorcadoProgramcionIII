@@ -11,7 +11,7 @@ public class JuegoService {
 	public Juego crearJuego() {
 		List<String> palabras = cargarPalabras();
 		String palabraRandom = palabraRandom(palabras.size(), palabras);
-		return new Juego(palabras, "espa�ol", palabraRandom);
+		return new Juego(palabras, "Spanish", palabraRandom);
 	}
 
 	public List<String> cargarPalabras() {
@@ -27,7 +27,7 @@ public class JuegoService {
 	public boolean buscarLetraOPalabraEnJuego(Juego juego, String input) {
 		String palabraJuego = juego.getPalabraEnJuego();
 		input = input.toUpperCase();
-		
+
 		// Palabra completa
 		if (input.length() == palabraJuego.length()) {
 			if (sonIguales(juego, input)) {
@@ -35,17 +35,20 @@ public class JuegoService {
 				juego.rellenarPalabraCompleta();
 				juego.setEstadoJuego(false);
 				return true;
-			} juego.setIntentos(0);
+			}
+			juego.setIntentos(0);
 		}
-			
+
 		// Letra
 		if (input.length() == 1) {
 			if (!(posiciones(juego, input).isEmpty())) {
+
 				sumarPuntosLetra(juego, input);
 				return true;
-			} restarIntento(juego);
+			}
+			restarIntento(juego);
 		}
-		
+
 		if (juego.getIntentos() <= 0)
 			juego.setEstadoJuego(false);
 		return false;
@@ -61,8 +64,8 @@ public class JuegoService {
 	}
 
 	private void sumarPuntosLetra(Juego juego, String input) {
-		for(int i = 0; i < juego.getPalabraEnJuego().length(); i++) {
-			if(input.charAt(0) == juego.getPalabraEnJuego().charAt(i)) {
+		for (int i = 0; i < juego.getPalabraEnJuego().length(); i++) {
+			if (input.charAt(0) == juego.getPalabraEnJuego().charAt(i)) {
 				juego.setPuntajeEnJuego(juego.getPuntajeEnJuego() + 50);
 			}
 		}
@@ -109,4 +112,16 @@ public class JuegoService {
 		return palabras.get(valorRandom);
 	}
 
+	public String getPalabraJuego(Juego juego) {
+		StringBuilder sb = new StringBuilder();
+		char[] letras = juego.getLetrasPorCompletar();
+		for (int i = 0; i < juego.getPalabraEnJuego().length(); i++) {
+			sb.append(letras[i]);
+		}
+		return sb.toString();
+	}
+
+	public String getIntentos(Juego juego) {
+		return "INTENTOS: " + juego.getIntentos();
+	}
 }
