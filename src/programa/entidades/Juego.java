@@ -16,10 +16,6 @@ public class Juego {
 	private int intentos;
 	private boolean estadoJuego;
 
-	public Juego() {
-
-	}
-
 	public Juego(List<String> palabras, String idioma, String palabraEnJuego) {
 		this.palabras = palabras;
 		this.idioma = idioma;

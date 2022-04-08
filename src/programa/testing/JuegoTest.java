@@ -2,7 +2,7 @@ package programa.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import programa.entidades.Juego;
@@ -10,64 +10,66 @@ import programa.servicio.JuegoService;
 
 class JuegoTest {
 	
+	JuegoService juegoService;
+	Juego juego;
+	
+	@BeforeEach
+	public void inicializar() {
+		juegoService = new JuegoService();
+		juego = new Juego(null, "español", "PALABRA");
+	}
+	
 	@Test
-	void puntajeTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		
+	public void puntajeTest() {
 		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
-		
-		assertEquals(juego.getPuntajeEnJuego(), 50);
+		assertEquals(50, juego.getPuntajeEnJuego());
 	}
 	
-	// ARREGLAR
 	@Test
-	void multiplicadorTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		
-		juegoService.buscarLetraOPalabraEnJuego(juego, "palabra"); //si la palabra esta en minuscula no la cuenta
-		
-		assertEquals(350, juego.getPuntajeEnJuego());
-	}
-	
-	// ARREGLAR
-	@Test
-	void multiplicadorConMenosLetrasTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		
+	public void letraRepetidaTest() {
 		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a"); //la "a" cuenta como una sola letra y son 3, por lo que el multiplicador no suma bien
-		juegoService.buscarLetraOPalabraEnJuego(juego, "PALABRA");
-		
-		assertEquals(350, juego.getPuntajeEnJuego());
-	}
-	
-	@Test
-	void intentosTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		
-		assertEquals(5, juego.getIntentos());
-		juegoService.buscarLetraOPalabraEnJuego(juego, "u");
+		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
+		assertEquals(50, juego.getPuntajeEnJuego());
 		assertEquals(4, juego.getIntentos());
 	}
 	
+	// ARREGLADO
 	@Test
-	void letrasMarcadasTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
-		
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
-		//palabra > plbr
-		assertEquals(1, juego.getLetrasMarcadas().size());
+	public void multiplicadorTest() {
+		juegoService.buscarLetraOPalabraEnJuego(juego, "palabra");
+		assertEquals(700, juego.getPuntajeEnJuego());
+	}
+	
+	// ARREGLADO
+	@Test
+	public void multiplicadorConMenosLetrasTest() { 
+		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
+		juegoService.buscarLetraOPalabraEnJuego(juego, "a"); 
+		juegoService.buscarLetraOPalabraEnJuego(juego, "PALABRA");
+		assertEquals(500, juego.getPuntajeEnJuego());
 	}
 	
 	@Test
-	void letrasFaltantesTest() {
-		JuegoService juegoService = new JuegoService();
-		Juego juego = juegoService.crearJuego();
+	public void restarIntentoTest() {
+		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		assertEquals(5, juego.getIntentos());
+		juegoService.buscarLetraOPalabraEnJuego(juego, "u");
+		assertEquals(4, juego.getIntentos());
+		assertTrue(juego.isEstadoJuego());
 	}
+	
+	@Test
+	public void restarIntentosPalabraCompletaTest() {
+		juegoService.buscarLetraOPalabraEnJuego(juego, "WAKANDA");
+		assertEquals(0, juego.getIntentos());
+		assertFalse(juego.isEstadoJuego());
+	}
+	
+	@Test
+	public void letrasMarcadasTest() {
+		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		assertEquals(1, juego.getLetrasMarcadas().size());
+	}
+	
 
 }
