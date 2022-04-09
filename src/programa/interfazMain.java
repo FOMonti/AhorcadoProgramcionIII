@@ -25,6 +25,7 @@ public class interfazMain {
 	private JLabel palabraEnJuego;
 	private JButton btnReset;
 	private JLabel lblIntentos;
+	private JLabel lblPuntaje;
 	private JLabel labelUserInput;
 	private JPanel palabraContainer;
 
@@ -72,6 +73,8 @@ public class interfazMain {
 		inicializarLabelPalabraEnJuego();
 
 		inicializarLabelIntentos();
+		
+		inicializarLabelPuntaje();
 
 		inicializarBTNReiniciar();
 
@@ -87,8 +90,9 @@ public class interfazMain {
 
 				juegoService.buscarLetraOPalabraEnJuego(juego, userInput.getText());
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
-				limpiarInput();
-				limpiarIntentos();
+				actualizarInput();
+				actualizarIntentos();
+				actualizarPuntaje();
 				ocultarJuego(juegoService.finJuego(juego));
 			}
 		});
@@ -101,8 +105,9 @@ public class interfazMain {
 			public void actionPerformed(ActionEvent e) {
 				juego = juegoService.crearJuego();
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
-				limpiarInput();
-				limpiarIntentos();
+				actualizarInput();
+				actualizarIntentos();
+				actualizarPuntaje();
 			}
 		});
 	}
@@ -119,11 +124,15 @@ public class interfazMain {
 
 //	  Metodos de limpiar variables
 
-	private void limpiarIntentos() {
+	private void actualizarIntentos() {
 		lblIntentos.setText(juegoService.getIntentos(juego));
 	}
+	
+	private void actualizarPuntaje() {
+		lblPuntaje.setText(juegoService.getPuntaje(juego));
+	}
 
-	private void limpiarInput() {
+	private void actualizarInput() {
 		userInput.setText("");
 	}
 
@@ -168,6 +177,14 @@ public class interfazMain {
 		lblIntentos.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblIntentos.setBounds(10, 11, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblIntentos);
+	}
+	
+	private void inicializarLabelPuntaje() {
+		lblPuntaje = new JLabel(juegoService.getPuntaje(juego));
+		lblPuntaje.setForeground(new Color(51, 204, 51));
+		lblPuntaje.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblPuntaje.setBounds(430, 11, 345, 51);
+		frmJuegoDelAhorcado.getContentPane().add(lblPuntaje);
 	}
 
 	private void inicializarLabelTitulo() {

@@ -55,20 +55,26 @@ class JuegoTest {
 		assertEquals(5, juego.getIntentos());
 		juegoService.buscarLetraOPalabraEnJuego(juego, "u");
 		assertEquals(4, juego.getIntentos());
-		assertTrue(juego.isEstadoJuego());
 	}
 	
 	@Test
 	public void restarIntentosPalabraCompletaTest() {
 		juegoService.buscarLetraOPalabraEnJuego(juego, "WAKANDA");
 		assertEquals(0, juego.getIntentos());
-		assertFalse(juego.isEstadoJuego());
+		assertTrue(juego.isFinJuego());
 	}
 	
 	@Test
 	public void letrasMarcadasTest() {
 		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
 		assertEquals(1, juego.getLetrasMarcadas().size());
+	}
+	
+	@Test
+	public void letrasPorCompletarTest() {
+		assertEquals("-------", juegoService.getLetrasPorCompletar(juego));
+		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		assertEquals("-A-A--A", juegoService.getLetrasPorCompletar(juego));
 	}
 	
 

@@ -128,6 +128,10 @@ public class JuegoService {
 	public String getIntentos(Juego juego) {
 		return "INTENTOS: " + juego.getIntentos();
 	}
+	
+	public String getPuntaje(Juego juego) {
+		return "PUNTAJE: " + String.valueOf(juego.getPuntajeEnJuego());
+	}
 
 	public boolean finJuego(Juego juego) {
 		return juego.isFinJuego();
