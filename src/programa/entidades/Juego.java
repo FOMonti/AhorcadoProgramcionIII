@@ -15,6 +15,7 @@ public class Juego {
 	private int puntajeEnJuego;
 	private int intentos;
 	private boolean finJuego;
+	private String mensaje;
 
 	public Juego(List<String> palabras, String idioma, String palabraEnJuego) {
 		this.palabras = palabras;
@@ -23,6 +24,7 @@ public class Juego {
 		this.puntajeEnJuego = 0;
 		this.intentos = 5;
 		this.finJuego = false;
+		this.mensaje = " ";
 		this.setLetrasMarcadas(new HashSet<String>());
 		rellenarVacio(palabraEnJuego.length());
 	}
@@ -123,5 +125,15 @@ public class Juego {
 	public void setLetrasMarcadas(Set<String> letrasMarcadas) {
 		this.letrasMarcadas = letrasMarcadas;
 	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	
+	
 
 }

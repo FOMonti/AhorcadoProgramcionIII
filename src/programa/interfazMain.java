@@ -26,6 +26,7 @@ public class interfazMain {
 	private JButton btnReset;
 	private JLabel lblIntentos;
 	private JLabel lblPuntaje;
+	private JLabel lblMensaje;
 	private JLabel labelUserInput;
 	private JPanel palabraContainer;
 
@@ -75,6 +76,8 @@ public class interfazMain {
 		inicializarLabelIntentos();
 		
 		inicializarLabelPuntaje();
+		
+		inicializarLabelMensaje();
 
 		inicializarBTNReiniciar();
 
@@ -90,6 +93,7 @@ public class interfazMain {
 
 				juegoService.buscarLetraOPalabraEnJuego(juego, userInput.getText());
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
+				actualizarMensaje();
 				actualizarInput();
 				actualizarIntentos();
 				actualizarPuntaje();
@@ -105,9 +109,13 @@ public class interfazMain {
 			public void actionPerformed(ActionEvent e) {
 				juego = juegoService.crearJuego();
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
+				actualizarMensaje();
 				actualizarInput();
 				actualizarIntentos();
 				actualizarPuntaje();
+				userInput.setVisible(true);
+				lblIntentos.setVisible(true);
+				labelUserInput.setVisible(true);
 			}
 		});
 	}
@@ -130,6 +138,10 @@ public class interfazMain {
 	
 	private void actualizarPuntaje() {
 		lblPuntaje.setText(juegoService.getPuntaje(juego));
+	}
+	
+	private void actualizarMensaje() {
+		lblMensaje.setText(juegoService.getMensaje(juego));
 	}
 
 	private void actualizarInput() {
@@ -185,6 +197,14 @@ public class interfazMain {
 		lblPuntaje.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblPuntaje.setBounds(430, 11, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblPuntaje);
+	}
+	
+	private void inicializarLabelMensaje() {
+		lblMensaje = new JLabel(juegoService.getMensaje(juego));
+		lblMensaje.setForeground(new Color(151, 204, 151));
+		lblMensaje.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblMensaje.setBounds(450, 100, 345, 51);
+		frmJuegoDelAhorcado.getContentPane().add(lblMensaje);
 	}
 
 	private void inicializarLabelTitulo() {

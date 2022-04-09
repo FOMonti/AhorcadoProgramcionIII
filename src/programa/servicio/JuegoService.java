@@ -24,7 +24,7 @@ public class JuegoService {
 		return palabras;
 	}
 
-	public boolean buscarLetraOPalabraEnJuego(Juego juego, String input) {
+	public void buscarLetraOPalabraEnJuego(Juego juego, String input) {
 		String palabraJuego = juego.getPalabraEnJuego();
 		input = input.toUpperCase();
 
@@ -33,8 +33,9 @@ public class JuegoService {
 			if (sonIguales(juego, input)) {
 				sumarPuntosPalabraCompleta(juego);
 				juego.rellenarPalabraCompleta();
+				juego.setMensaje("Adivinaste!");
 				juego.setFinJuego(false);
-				return true;
+				return;
 			}
 			juego.setIntentos(0);
 		}
@@ -44,14 +45,21 @@ public class JuegoService {
 			if (!(posiciones(juego, input).isEmpty())) {
 
 				sumarPuntosLetra(juego, input);
-				return true;
+				juego.setMensaje("Muy bien!");
+				return;
 			}
+			juego.setMensaje("Fallaste :(");
 			restarIntento(juego);
 		}
+		
+		if (input.length() != 1 && input.length() != palabraJuego.length()) juego.setIntentos(0);
 
-		if (juego.getIntentos() <= 0)
+		if (juego.getIntentos() <= 0) {
+			juego.setMensaje("Perdiste :(");
 			juego.setFinJuego(true);
-		return false;
+		}
+		
+		return;
 	}
 
 	private void restarIntento(Juego juego) {
@@ -131,6 +139,10 @@ public class JuegoService {
 	
 	public String getPuntaje(Juego juego) {
 		return "PUNTAJE: " + String.valueOf(juego.getPuntajeEnJuego());
+	}
+	
+	public String getMensaje(Juego juego) {
+		return "" + juego.getMensaje();
 	}
 
 	public boolean finJuego(Juego juego) {

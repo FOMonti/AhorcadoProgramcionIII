@@ -55,6 +55,7 @@ class JuegoTest {
 		assertEquals(5, juego.getIntentos());
 		juegoService.buscarLetraOPalabraEnJuego(juego, "u");
 		assertEquals(4, juego.getIntentos());
+		assertFalse(juegoService.finJuego(juego));
 	}
 	
 	@Test
