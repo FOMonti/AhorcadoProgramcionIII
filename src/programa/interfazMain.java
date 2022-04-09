@@ -61,59 +61,21 @@ public class interfazMain {
 	private void initialize() {
 		juego = juegoService.crearJuego();
 
-		frmJuegoDelAhorcado = new JFrame();
-		frmJuegoDelAhorcado.setTitle("Juego del Ahorcado - Programacion III");
-		frmJuegoDelAhorcado.setForeground(new Color(0, 0, 0));
-		frmJuegoDelAhorcado.setBackground(new Color(0, 0, 0));
-		frmJuegoDelAhorcado.getContentPane().setEnabled(false);
-		frmJuegoDelAhorcado.getContentPane().setBackground(new Color(0, 0, 51));
-		frmJuegoDelAhorcado.setBounds(100, 100, 1024, 673);
-		frmJuegoDelAhorcado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmJuegoDelAhorcado.getContentPane().setLayout(null);
+		inicializarFrameJuego();
 
-		labelUserInput = new JLabel("Ingrese Letra o Palabra:");
-		labelUserInput.setBackground(new Color(255, 255, 255));
-		labelUserInput.setForeground(new Color(255, 255, 255));
-		labelUserInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 33));
-		labelUserInput.setBounds(322, 444, 401, 101);
-		frmJuegoDelAhorcado.getContentPane().add(labelUserInput);
+		inicializarLabelUserInput();
 
-		userInput = new JTextField();
-		userInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		userInput.setBounds(413, 532, 186, 42);
-		frmJuegoDelAhorcado.getContentPane().add(userInput);
-		userInput.setColumns(10);
+		inicializarTextFieldInput();
 
-		palabraContainer = new JPanel();
-		palabraContainer.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		palabraContainer.setBackground(new Color(51, 51, 102));
-		palabraContainer.setBounds(230, 300, 549, 128);
-		frmJuegoDelAhorcado.getContentPane().add(palabraContainer);
+		inicializarPalabraContainer();
 
-		palabraEnJuego = new JLabel(juegoService.getPalabraJuego(juego));
-		palabraContainer.add(palabraEnJuego);
-		palabraEnJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		palabraEnJuego.setForeground(new Color(255, 255, 255));
-		palabraEnJuego.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+		inicializarLabelPalabraEnJuego();
 
-		lblIntentos = new JLabel(juegoService.getIntentos(juego));
-		lblIntentos.setForeground(new Color(204, 51, 51));
-		lblIntentos.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		lblIntentos.setBounds(10, 11, 345, 51);
-		frmJuegoDelAhorcado.getContentPane().add(lblIntentos);
+		inicializarLabelIntentos();
 
-		btnReset = new JButton("REINICIAR");
-		btnReset.setForeground(new Color(255, 255, 255));
-		btnReset.setBackground(new Color(51, 51, 102));
-		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-		btnReset.setBounds(873, 15, 125, 51);
-		frmJuegoDelAhorcado.getContentPane().add(btnReset);
+		inicializarBTNReiniciar();
 
-		lblTituloDelJuego = new JLabel("Juego del Ahorcado");
-		lblTituloDelJuego.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblTituloDelJuego.setForeground(new Color(255, 255, 255));
-		lblTituloDelJuego.setBounds(330, 191, 352, 66);
-		frmJuegoDelAhorcado.getContentPane().add(lblTituloDelJuego);
+		inicializarLabelTitulo();
 
 		// Event listeners
 
@@ -124,10 +86,10 @@ public class interfazMain {
 			public void actionPerformed(ActionEvent e) {
 
 				juegoService.buscarLetraOPalabraEnJuego(juego, userInput.getText());
-				palabraEnJuego.setText(juegoService.getPalabraJuego(juego));
+				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
 				limpiarInput();
 				limpiarIntentos();
-
+				ocultarJuego(juegoService.finJuego(juego));
 			}
 		});
 
@@ -137,16 +99,25 @@ public class interfazMain {
 			// Cuando el usuario hace CLICK en el boton de REINICIAR
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				juego = juegoService.crearJuego();
-				palabraEnJuego.setText(juegoService.getPalabraJuego(juego));
-
+				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
 				limpiarInput();
 				limpiarIntentos();
-
 			}
 		});
 	}
+
+	private void ocultarJuego(boolean ocultar) {
+		if (ocultar) {
+			userInput.setVisible(false);
+			palabraEnJuego.setText(juegoService.getPalabraJuego(juego));
+			lblIntentos.setVisible(false);
+			labelUserInput.setVisible(false);
+		}
+
+	}
+
+//	  Metodos de limpiar variables
 
 	private void limpiarIntentos() {
 		lblIntentos.setText(juegoService.getIntentos(juego));
@@ -154,5 +125,77 @@ public class interfazMain {
 
 	private void limpiarInput() {
 		userInput.setText("");
+	}
+
+	// Metodos de inicializar variables
+
+	private void inicializarTextFieldInput() {
+		userInput = new JTextField();
+		userInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		userInput.setBounds(413, 532, 186, 42);
+		frmJuegoDelAhorcado.getContentPane().add(userInput);
+		userInput.setColumns(10);
+	}
+
+	private void inicializarLabelUserInput() {
+		labelUserInput = new JLabel("Ingrese Letra o Palabra:");
+		labelUserInput.setBackground(new Color(255, 255, 255));
+		labelUserInput.setForeground(new Color(255, 255, 255));
+		labelUserInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 33));
+		labelUserInput.setBounds(322, 444, 401, 101);
+		frmJuegoDelAhorcado.getContentPane().add(labelUserInput);
+	}
+
+	private void inicializarPalabraContainer() {
+		palabraContainer = new JPanel();
+		palabraContainer.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		palabraContainer.setBackground(new Color(51, 51, 102));
+		palabraContainer.setBounds(230, 300, 549, 128);
+		frmJuegoDelAhorcado.getContentPane().add(palabraContainer);
+	}
+
+	private void inicializarLabelPalabraEnJuego() {
+		palabraEnJuego = new JLabel(juegoService.getLetrasPorCompletar(juego));
+		palabraContainer.add(palabraEnJuego);
+		palabraEnJuego.setHorizontalAlignment(SwingConstants.CENTER);
+		palabraEnJuego.setForeground(new Color(255, 255, 255));
+		palabraEnJuego.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+	}
+
+	private void inicializarLabelIntentos() {
+		lblIntentos = new JLabel(juegoService.getIntentos(juego));
+		lblIntentos.setForeground(new Color(204, 51, 51));
+		lblIntentos.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblIntentos.setBounds(10, 11, 345, 51);
+		frmJuegoDelAhorcado.getContentPane().add(lblIntentos);
+	}
+
+	private void inicializarLabelTitulo() {
+		lblTituloDelJuego = new JLabel("Juego del Ahorcado");
+		lblTituloDelJuego.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lblTituloDelJuego.setForeground(new Color(255, 255, 255));
+		lblTituloDelJuego.setBounds(330, 191, 352, 66);
+		frmJuegoDelAhorcado.getContentPane().add(lblTituloDelJuego);
+	}
+
+	private void inicializarBTNReiniciar() {
+		btnReset = new JButton("REINICIAR");
+		btnReset.setForeground(new Color(255, 255, 255));
+		btnReset.setBackground(new Color(51, 51, 102));
+		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		btnReset.setBounds(873, 15, 125, 51);
+		frmJuegoDelAhorcado.getContentPane().add(btnReset);
+	}
+
+	private void inicializarFrameJuego() {
+		frmJuegoDelAhorcado = new JFrame();
+		frmJuegoDelAhorcado.setTitle("Juego del Ahorcado - Programacion III");
+		frmJuegoDelAhorcado.setForeground(new Color(0, 0, 0));
+		frmJuegoDelAhorcado.setBackground(new Color(0, 0, 0));
+		frmJuegoDelAhorcado.getContentPane().setEnabled(false);
+		frmJuegoDelAhorcado.getContentPane().setBackground(new Color(0, 0, 51));
+		frmJuegoDelAhorcado.setBounds(100, 100, 1024, 673);
+		frmJuegoDelAhorcado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmJuegoDelAhorcado.getContentPane().setLayout(null);
 	}
 }

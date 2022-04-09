@@ -33,7 +33,7 @@ public class JuegoService {
 			if (sonIguales(juego, input)) {
 				sumarPuntosPalabraCompleta(juego);
 				juego.rellenarPalabraCompleta();
-				juego.setEstadoJuego(false);
+				juego.setFinJuego(false);
 				return true;
 			}
 			juego.setIntentos(0);
@@ -50,7 +50,7 @@ public class JuegoService {
 		}
 
 		if (juego.getIntentos() <= 0)
-			juego.setEstadoJuego(false);
+			juego.setFinJuego(true);
 		return false;
 	}
 
@@ -112,7 +112,7 @@ public class JuegoService {
 		return palabras.get(valorRandom);
 	}
 
-	public String getPalabraJuego(Juego juego) {
+	public String getLetrasPorCompletar(Juego juego) {
 		StringBuilder sb = new StringBuilder();
 		char[] letras = juego.getLetrasPorCompletar();
 		for (int i = 0; i < juego.getPalabraEnJuego().length(); i++) {
@@ -121,7 +121,15 @@ public class JuegoService {
 		return sb.toString();
 	}
 
+	public String getPalabraJuego(Juego juego) {
+		return juego.getPalabraEnJuego();
+	}
+
 	public String getIntentos(Juego juego) {
 		return "INTENTOS: " + juego.getIntentos();
+	}
+
+	public boolean finJuego(Juego juego) {
+		return juego.isFinJuego();
 	}
 }
