@@ -9,8 +9,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
@@ -18,6 +20,16 @@ import programa.entidades.Juego;
 import programa.servicio.JuegoService;
 
 public class interfazMain {
+
+	private JFrame frmInicio;
+	private JLabel lblTituloInicio;
+	private JLabel lblNombre;
+	private JLabel lblDificultad;
+	private JTextField nombreInput;
+	private final ButtonGroup buttonGroupDificultad = new ButtonGroup();
+	private JRadioButton rdbtnDificultadNormal;
+	private JRadioButton rdbtnDificultadDificil;
+	private JButton btnJugar;
 
 	private JFrame frmJuegoDelAhorcado;
 	private JTextField userInput;
@@ -42,7 +54,8 @@ public class interfazMain {
 			public void run() {
 				try {
 					interfazMain window = new interfazMain();
-					window.frmJuegoDelAhorcado.setVisible(true);
+					// window.frmJuegoDelAhorcado.setVisible(true);
+					window.frmInicio.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,6 +76,22 @@ public class interfazMain {
 	private void initialize() {
 		juego = juegoService.crearJuego();
 
+		inicializarInicio();
+
+		inicializarBTNJugar();
+
+		inicializarLabelDificultad();
+
+		inicializarRadioBTNDificil();
+
+		inicializarRadioBTNNormal();
+
+		inicializarLabelNombre();
+
+		inicializarTextFieldNombre();
+
+		inicializarLabelTituloInicio();
+
 		inicializarFrameJuego();
 
 		inicializarLabelUserInput();
@@ -74,9 +103,9 @@ public class interfazMain {
 		inicializarLabelPalabraEnJuego();
 
 		inicializarLabelIntentos();
-		
+
 		inicializarLabelPuntaje();
-		
+
 		inicializarLabelMensaje();
 
 		inicializarBTNReiniciar();
@@ -118,6 +147,15 @@ public class interfazMain {
 				labelUserInput.setVisible(true);
 			}
 		});
+
+		btnJugar.addActionListener(new ActionListener() {
+
+			// Cuando el usuario hace CLICK en el boton de REINICIAR
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarFrameInicioJugar();
+			}
+		});
 	}
 
 	private void ocultarJuego(boolean ocultar) {
@@ -130,16 +168,22 @@ public class interfazMain {
 
 	}
 
+	private void cambiarFrameInicioJugar() {
+		frmInicio.setVisible(false);
+		frmJuegoDelAhorcado.setVisible(true);
+		;
+	}
+
 //	  Metodos de limpiar variables
 
 	private void actualizarIntentos() {
 		lblIntentos.setText(juegoService.getIntentos(juego));
 	}
-	
+
 	private void actualizarPuntaje() {
 		lblPuntaje.setText(juegoService.getPuntaje(juego));
 	}
-	
+
 	private void actualizarMensaje() {
 		lblMensaje.setText(juegoService.getMensaje(juego));
 	}
@@ -149,7 +193,7 @@ public class interfazMain {
 	}
 
 	// Metodos de inicializar variables
-
+	// Frame Juego
 	private void inicializarTextFieldInput() {
 		userInput = new JTextField();
 		userInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
@@ -190,7 +234,7 @@ public class interfazMain {
 		lblIntentos.setBounds(10, 11, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblIntentos);
 	}
-	
+
 	private void inicializarLabelPuntaje() {
 		lblPuntaje = new JLabel(juegoService.getPuntaje(juego));
 		lblPuntaje.setForeground(new Color(51, 204, 51));
@@ -198,7 +242,7 @@ public class interfazMain {
 		lblPuntaje.setBounds(430, 11, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblPuntaje);
 	}
-	
+
 	private void inicializarLabelMensaje() {
 		lblMensaje = new JLabel(juegoService.getMensaje(juego));
 		lblMensaje.setForeground(new Color(151, 204, 151));
@@ -231,8 +275,79 @@ public class interfazMain {
 		frmJuegoDelAhorcado.setBackground(new Color(0, 0, 0));
 		frmJuegoDelAhorcado.getContentPane().setEnabled(false);
 		frmJuegoDelAhorcado.getContentPane().setBackground(new Color(0, 0, 51));
-		frmJuegoDelAhorcado.setBounds(100, 100, 1024, 673);
+		frmJuegoDelAhorcado.setBounds(200, 100, 1024, 673);
 		frmJuegoDelAhorcado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmJuegoDelAhorcado.getContentPane().setLayout(null);
+	}
+
+	// FrameInicio
+
+	private void inicializarBTNJugar() {
+		btnJugar = new JButton("Jugar");
+		btnJugar.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnJugar.setBounds(405, 350, 150, 35);
+		frmInicio.getContentPane().add(btnJugar);
+	}
+
+	private void inicializarLabelDificultad() {
+		lblDificultad = new JLabel("Ingrese la dificultad:");
+		lblDificultad.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblDificultad.setForeground(new Color(255, 255, 255));
+		lblDificultad.setBounds(100, 280, 352, 66);
+		frmInicio.getContentPane().add(lblDificultad);
+	}
+
+	private void inicializarRadioBTNNormal() {
+		rdbtnDificultadNormal = new JRadioButton("NORMAL");
+		buttonGroupDificultad.add(rdbtnDificultadNormal);
+		rdbtnDificultadNormal.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		rdbtnDificultadNormal.setBounds(383, 300, 120, 23);
+		rdbtnDificultadNormal.setBackground(new Color(0, 0, 51));
+		frmInicio.getContentPane().add(rdbtnDificultadNormal);
+	}
+
+	private void inicializarRadioBTNDificil() {
+		rdbtnDificultadDificil = new JRadioButton("DIFICIL");
+		buttonGroupDificultad.add(rdbtnDificultadDificil);
+		rdbtnDificultadDificil.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		rdbtnDificultadDificil.setBounds(500, 300, 100, 23);
+		rdbtnDificultadDificil.setBackground(new Color(0, 0, 51));
+		frmInicio.getContentPane().add(rdbtnDificultadDificil);
+	}
+
+	private void inicializarTextFieldNombre() {
+		nombreInput = new JTextField();
+		nombreInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		nombreInput.setBounds(383, 200, 186, 42);
+		frmInicio.getContentPane().add(nombreInput);
+		nombreInput.setColumns(10);
+	}
+
+	private void inicializarLabelTituloInicio() {
+		lblTituloInicio = new JLabel("MENU");
+		lblTituloInicio.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lblTituloInicio.setForeground(new Color(255, 255, 255));
+		lblTituloInicio.setBounds(413, 100, 352, 66);
+		frmInicio.getContentPane().add(lblTituloInicio);
+	}
+
+	private void inicializarLabelNombre() {
+		lblNombre = new JLabel("Ingrese su nombre: ");
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblNombre.setForeground(new Color(255, 255, 255));
+		lblNombre.setBounds(120, 180, 352, 66);
+		frmInicio.getContentPane().add(lblNombre);
+	}
+
+	private void inicializarInicio() {
+		frmInicio = new JFrame();
+		frmInicio.setTitle("Menu");
+		frmInicio.setForeground(new Color(0, 0, 0));
+		frmInicio.setBackground(new Color(0, 0, 0));
+		frmInicio.getContentPane().setEnabled(false);
+		frmInicio.getContentPane().setBackground(new Color(0, 0, 51));
+		frmInicio.setBounds(200, 100, 1024, 673);
+		frmInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmInicio.getContentPane().setLayout(null);
 	}
 }

@@ -5,13 +5,11 @@ import java.util.List;
 public class Usuario {
 
 	private String nombre;
-	private String contrasena;
 	private List<Record> records;
 
-	public Usuario(String nombre, String contrasena, List<Record> records) {
+	public Usuario(String nombre, List<Record> records) {
 
 		this.nombre = nombre;
-		this.contrasena = contrasena;
 		this.records = records;
 	}
 
@@ -21,14 +19,6 @@ public class Usuario {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getContrasena() {
-		return contrasena;
-	}
-
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
 	}
 
 	public List<Record> getRecords() {
