@@ -16,19 +16,19 @@ class JuegoTest {
 	@BeforeEach
 	public void inicializar() {
 		juegoService = new JuegoService();
-		juego = new Juego(null, "español", "PALABRA");
+		juego = new Juego(null, "español", "PALABRA", "NORMAL");
 	}
 
 	@Test
 	public void puntajeTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
+		juegoService.jugar(juego, "p");
 		assertEquals(50, juego.getPuntajeEnJuego());
 	}
 
 	@Test
 	public void letraRepetidaTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
-		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
+		juegoService.jugar(juego, "p");
+		juegoService.jugar(juego, "p");
 		assertEquals(50, juego.getPuntajeEnJuego());
 		assertEquals(4, juego.getIntentos());
 	}
@@ -36,45 +36,45 @@ class JuegoTest {
 	// ARREGLADO
 	@Test
 	public void multiplicadorTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "palabra");
+		juegoService.jugar(juego, "palabra");
 		assertEquals(700, juego.getPuntajeEnJuego());
 	}
 
 	// ARREGLADO
 	@Test
 	public void multiplicadorConMenosLetrasTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "p");
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
-		juegoService.buscarLetraOPalabraEnJuego(juego, "PALABRA");
+		juegoService.jugar(juego, "p");
+		juegoService.jugar(juego, "a");
+		juegoService.jugar(juego, "PALABRA");
 		assertEquals(500, juego.getPuntajeEnJuego());
 	}
 
 	@Test
 	public void restarIntentoTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		juegoService.jugar(juego, "a");
 		assertEquals(5, juego.getIntentos());
-		juegoService.buscarLetraOPalabraEnJuego(juego, "u");
+		juegoService.jugar(juego, "u");
 		assertEquals(4, juego.getIntentos());
 		assertFalse(juegoService.finJuego(juego));
 	}
 
 	@Test
 	public void restarIntentosPalabraCompletaTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "WAKANDA"); // PALABRA
+		juegoService.jugar(juego, "WAKANDA"); // PALABRA
 		assertEquals(0, juego.getIntentos());
 		assertTrue(juego.isFinJuego());
 	}
 
 	@Test
 	public void letrasMarcadasTest() {
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		juegoService.jugar(juego, "a");
 		assertEquals(1, juego.getLetrasMarcadas().size());
 	}
 
 	@Test
 	public void letrasPorCompletarTest() {
 		assertEquals("-------", juegoService.getLetrasPorCompletar(juego));
-		juegoService.buscarLetraOPalabraEnJuego(juego, "a");
+		juegoService.jugar(juego, "a");
 		assertEquals("-A-A--A", juegoService.getLetrasPorCompletar(juego));
 	}
 

@@ -18,7 +18,7 @@ public class Juego {
 	private String mensaje;
 	private String dificultad;
 
-	public Juego(List<String> palabras, String idioma, String palabraEnJuego) {
+	public Juego(List<String> palabras, String idioma, String palabraEnJuego, String dificultad) {
 		this.palabras = palabras;
 		this.idioma = idioma;
 		this.palabraEnJuego = palabraEnJuego;
@@ -26,7 +26,7 @@ public class Juego {
 		this.intentos = 5;
 		this.finJuego = false;
 		this.mensaje = " ";
-		this.dificultad = "Normal"; // default
+		this.dificultad = dificultad; // default
 		this.setLetrasMarcadas(new HashSet<String>());
 		rellenarVacio(palabraEnJuego.length());
 	}

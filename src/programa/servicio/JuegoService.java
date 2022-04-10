@@ -10,10 +10,10 @@ import programa.entidades.Record;
 
 public class JuegoService {
 
-	public Juego crearJuego() {
-		List<String> palabras = cargarPalabras();
+	public Juego crearJuego(String dificultad) {
+		List<String> palabras = cargarPalabras(dificultad);
 		String palabraRandom = palabraRandom(palabras.size(), palabras);
-		return new Juego(palabras, "Spanish", palabraRandom);
+		return new Juego(palabras, "Spanish", palabraRandom, dificultad);
 	}
 
 	public void guardarJugador(Juego juego, String nombre) {
@@ -26,17 +26,17 @@ public class JuegoService {
 		juego.getJugador().agregarRecord(record);
 	}
 
-	public List<String> cargarPalabras() {
+	public List<String> cargarPalabras(String dificultad) {
 		List<String> palabras = new ArrayList<String>();
-		palabras.add("IGLESIA");
-		palabras.add("PERRO");
-		palabras.add("DINOSAURIO");
-		palabras.add("UNIVERSIDAD");
-		palabras.add("ORANGUTAN");
+		if (dificultad.equals("NORMAL")) {
+			palabras = Palabra.getPalabrasDificultadNormal();
+		} else {
+			palabras = Palabra.getPalabrasDificultadDificil();
+		}
 		return palabras;
 	}
 
-	public void buscarLetraOPalabraEnJuego(Juego juego, String input) {
+	public void jugar(Juego juego, String input) {
 		String palabraJuego = juego.getPalabraEnJuego();
 		input = input.toUpperCase();
 
@@ -45,9 +45,10 @@ public class JuegoService {
 
 		if (input.length() != 1 && input.length() != palabraJuego.length()) {
 			restarIntento(juego);
-			juego.setMensaje("Debes poner un caracter o intentar adivinar la palabra completa");
+			juego.setMensaje("Debes poner un caracter o intentar \n adivinar la palabra completa");
 			return;
 		}
+
 		if (buscarLetraEnPalabra(juego, input))
 			return;
 

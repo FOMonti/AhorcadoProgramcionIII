@@ -12,14 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import programa.entidades.Juego;
-import programa.servicio.JuegoService;
-
 public class InterfazInicio {
 
-	private Juego juego;
-	private JuegoService juegoService = new JuegoService();
 	private InterfazJuego interfazJuego;
+	private String dificultad;
 
 	private JFrame frmInicio;
 	private JLabel lblTituloInicio;
@@ -35,8 +31,7 @@ public class InterfazInicio {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public void menu(Juego juego, InterfazJuego interfazJuego) {
-		this.juego = juego;
+	public void menu(InterfazJuego interfazJuego) {
 		this.interfazJuego = interfazJuego;
 
 		inicializarInicio();
@@ -44,7 +39,7 @@ public class InterfazInicio {
 		inicializarBTNJugar();
 
 		inicializarLabelDificultad();
-		
+
 		inicializarLabelError();
 
 		inicializarRadioBTNDificil();
@@ -62,21 +57,19 @@ public class InterfazInicio {
 			// Cuando el usuario hace CLICK en el boton de Jugar
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnDificultadNormal.isSelected() && !nombreInput.getText().isEmpty()) {
+				if (rdbtnDificultadNormal.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad normal
-					juego.setDificultad("Normal");
+					dificultad = "NORMAL";
 					cerrarInicio();
-				}
-				else if(rdbtnDificultadDificil.isSelected() && !nombreInput.getText().isEmpty() ) {
+				} else if (rdbtnDificultadDificil.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad dificil
-					juego.setDificultad("Dificil");
+					dificultad = "DIFICIL";
 					cerrarInicio();
 				}
-				
-				
-				// Si hay algo que el usuario no completo o selecciono...	
+
+				// Si hay algo que el usuario no completo o selecciono...
 				lblError.setVisible(true);
-				
+
 			}
 		});
 	}
@@ -87,7 +80,7 @@ public class InterfazInicio {
 
 	private void cerrarInicio() {
 		frmInicio.setVisible(false);
-		interfazJuego.empezarJuego(nombreInput.getText());
+		interfazJuego.empezarJuego(nombreInput.getText(), dificultad);
 		;
 	}
 
@@ -116,7 +109,7 @@ public class InterfazInicio {
 		rdbtnDificultadNormal.setBackground(new Color(0, 0, 51));
 		rdbtnDificultadNormal.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadNormal);
-		
+
 	}
 
 	private void inicializarRadioBTNDificil() {
@@ -143,10 +136,9 @@ public class InterfazInicio {
 		lblTituloInicio.setForeground(new Color(255, 255, 255));
 		lblTituloInicio.setBounds(448, 99, 113, 66);
 		frmInicio.getContentPane().add(lblTituloInicio);
-		
-		
+
 	}
-	
+
 	private void inicializarLabelError() {
 		lblError = new JLabel("Complete y/o seleccione todos los campos.");
 		lblError.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -154,7 +146,7 @@ public class InterfazInicio {
 		lblError.setBounds(309, 481, 389, 66);
 		lblError.setVisible(false);
 		frmInicio.getContentPane().add(lblError);
-		
+
 	}
 
 	private void inicializarLabelNombre() {

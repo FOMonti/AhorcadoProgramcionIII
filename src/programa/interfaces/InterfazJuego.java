@@ -37,23 +37,16 @@ public class InterfazJuego {
 	 * @wbp.parser.entryPoint
 	 */
 	public void iniciarJuego() {
-		juego = juegoService.crearJuego();
 
 		inicializarFrameJuego();
+
+		// inicializarLabelMensaje();
 
 		inicializarLabelUserInput();
 
 		inicializarTextFieldInput();
 
 		inicializarPalabraContainer();
-
-		inicializarLabelPalabraEnJuego();
-
-		inicializarLabelIntentos();
-
-		inicializarLabelPuntaje();
-
-		inicializarLabelMensaje();
 
 		inicializarBTNReiniciar();
 
@@ -64,7 +57,7 @@ public class InterfazJuego {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				juegoService.buscarLetraOPalabraEnJuego(juego, userInput.getText());
+				juegoService.jugar(juego, userInput.getText());
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
 				actualizarMensaje();
 				actualizarInput();
@@ -80,7 +73,7 @@ public class InterfazJuego {
 			// Cuando el usuario hace CLICK en el boton de REINICIAR
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				juego = juegoService.crearJuego();
+				juego = juegoService.crearJuego(juego.getDificultad());
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
 				actualizarMensaje();
 				actualizarInput();
@@ -94,9 +87,16 @@ public class InterfazJuego {
 
 	}
 
-	public void empezarJuego(String nombre) {
+	public void empezarJuego(String nombre, String dificultad) {
+		juego = juegoService.crearJuego(dificultad);
+
 		juegoService.guardarJugador(juego, nombre);
+		juego.setDificultad(dificultad);
 		inicializarLabelNombreJugador(juegoService.getNombreJugador(juego));
+		inicializarLabelPalabraEnJuego();
+		inicializarLabelIntentos();
+		inicializarLabelPuntaje();
+		inicializarLabelMensaje();
 		frmJuegoDelAhorcado.setVisible(true);
 	}
 
@@ -180,9 +180,10 @@ public class InterfazJuego {
 
 	private void inicializarLabelMensaje() {
 		lblMensaje = new JLabel(juegoService.getMensaje(juego));
+		lblMensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensaje.setForeground(new Color(151, 204, 151));
 		lblMensaje.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		lblMensaje.setBounds(450, 100, 345, 51);
+		lblMensaje.setBounds(69, 114, 815, 66);
 		frmJuegoDelAhorcado.getContentPane().add(lblMensaje);
 	}
 

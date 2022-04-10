@@ -4,13 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 
-import programa.entidades.Juego;
-import programa.servicio.JuegoService;
-
 public class Interfaz {
 
-	private Juego juego;
-	private static final JuegoService juegoService = new JuegoService();
 	private static final InterfazInicio interfazInicio = new InterfazInicio();
 	private static final InterfazJuego interfazjuego = new InterfazJuego();
 
@@ -39,8 +34,7 @@ public class Interfaz {
 	}
 
 	private void initialize() {
-		this.juego = juegoService.crearJuego();
-		interfazInicio.menu(juego, interfazjuego);
+		interfazInicio.menu(interfazjuego);
 		interfazjuego.iniciarJuego();
 	}
 
