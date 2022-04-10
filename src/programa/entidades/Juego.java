@@ -10,7 +10,7 @@ public class Juego {
 	private Set<String> letrasMarcadas;
 	private String palabraEnJuego;
 	private char[] letrasPorCompletar;
-	private Usuario usuario;
+	private Jugador jugador;
 	private String idioma;
 	private int puntajeEnJuego;
 	private int intentos;
@@ -46,6 +46,15 @@ public class Juego {
 		}
 	}
 
+	public boolean isJugadorWin() {
+		for (int i = 0; i < letrasPorCompletar.length; i++) {
+			if (letrasPorCompletar[i] != palabraEnJuego.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public List<String> getPalabras() {
 		return palabras;
 	}
@@ -54,12 +63,12 @@ public class Juego {
 		this.palabras = palabras;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Jugador getJugador() {
+		return jugador;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
 	}
 
 	public String getIdioma() {
@@ -133,7 +142,5 @@ public class Juego {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-	
-	
 
 }

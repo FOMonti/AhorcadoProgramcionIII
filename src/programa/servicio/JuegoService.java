@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import programa.entidades.Juego;
+import programa.entidades.Jugador;
+import programa.entidades.Record;
 
 public class JuegoService {
 
@@ -12,6 +14,16 @@ public class JuegoService {
 		List<String> palabras = cargarPalabras();
 		String palabraRandom = palabraRandom(palabras.size(), palabras);
 		return new Juego(palabras, "Spanish", palabraRandom);
+	}
+
+	public void guardarJugador(Juego juego, String nombre) {
+		Jugador jugador = new Jugador(nombre);
+		juego.setJugador(jugador);
+	}
+
+	public void guardarRecord(Juego juego) {
+		Record record = new Record(juego.getPuntajeEnJuego(), juego.isJugadorWin(), juego.getPalabraEnJuego());
+		juego.getJugador().agregarRecord(record);
 	}
 
 	public List<String> cargarPalabras() {
@@ -51,14 +63,15 @@ public class JuegoService {
 			juego.setMensaje("Fallaste :(");
 			restarIntento(juego);
 		}
-		
-		if (input.length() != 1 && input.length() != palabraJuego.length()) juego.setIntentos(0);
+
+		if (input.length() != 1 && input.length() != palabraJuego.length())
+			juego.setIntentos(0);
 
 		if (juego.getIntentos() <= 0) {
 			juego.setMensaje("Perdiste :(");
 			juego.setFinJuego(true);
 		}
-		
+
 		return;
 	}
 
@@ -136,13 +149,17 @@ public class JuegoService {
 	public String getIntentos(Juego juego) {
 		return "INTENTOS: " + juego.getIntentos();
 	}
-	
+
 	public String getPuntaje(Juego juego) {
 		return "PUNTAJE: " + String.valueOf(juego.getPuntajeEnJuego());
 	}
-	
+
 	public String getMensaje(Juego juego) {
 		return "" + juego.getMensaje();
+	}
+
+	public String getNombreJugador(Juego juego) {
+		return "JUGADOR: " + juego.getJugador().getNombre().toUpperCase();
 	}
 
 	public boolean finJuego(Juego juego) {

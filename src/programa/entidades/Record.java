@@ -4,11 +4,12 @@ public class Record {
 
 	private int puntaje;
 	private boolean gano;
-	//private String palabra;
+	private String palabra;
 
-	public Record(int puntaje, boolean gano) {
+	public Record(int puntaje, boolean gano, String palabra) {
 		this.puntaje = puntaje;
 		this.gano = gano;
+		this.palabra = palabra;
 	}
 
 	public int getPuntaje() {
@@ -25,6 +26,14 @@ public class Record {
 
 	public void setGano(boolean gano) {
 		this.gano = gano;
+	}
+
+	public String getPalabra() {
+		return palabra;
+	}
+
+	public void setPalabra(String palabra) {
+		this.palabra = palabra;
 	}
 
 }

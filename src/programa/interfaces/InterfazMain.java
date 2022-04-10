@@ -1,4 +1,4 @@
-package programa;
+package programa.interfaces;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 import programa.entidades.Juego;
 import programa.servicio.JuegoService;
 
-public class interfazMain {
+public class InterfazMain {
 
 	private JFrame frmInicio;
 	private JLabel lblTituloInicio;
@@ -32,14 +32,15 @@ public class interfazMain {
 	private JButton btnJugar;
 
 	private JFrame frmJuegoDelAhorcado;
-	private JTextField userInput;
+	private JLabel lblNombreJugador;
 	private JLabel lblTituloDelJuego;
 	private JLabel palabraEnJuego;
-	private JButton btnReset;
 	private JLabel lblIntentos;
 	private JLabel lblPuntaje;
 	private JLabel lblMensaje;
 	private JLabel labelUserInput;
+	private JTextField userInput;
+	private JButton btnReset;
 	private JPanel palabraContainer;
 
 	private Juego juego;
@@ -53,7 +54,7 @@ public class interfazMain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					interfazMain window = new interfazMain();
+					InterfazMain window = new InterfazMain();
 					// window.frmJuegoDelAhorcado.setVisible(true);
 					window.frmInicio.setVisible(true);
 				} catch (Exception e) {
@@ -66,7 +67,7 @@ public class interfazMain {
 	/**
 	 * Create the application.
 	 */
-	public interfazMain() {
+	public InterfazMain() {
 		initialize();
 	}
 
@@ -150,10 +151,12 @@ public class interfazMain {
 
 		btnJugar.addActionListener(new ActionListener() {
 
-			// Cuando el usuario hace CLICK en el boton de REINICIAR
+			// Cuando el usuario hace CLICK en el boton de Jugar
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarFrameInicioJugar();
+				juegoService.guardarJugador(juego, nombreInput.getText());
+				inicializarLabelNombreJugador();
+				empezarJuego();
 			}
 		});
 	}
@@ -168,7 +171,8 @@ public class interfazMain {
 
 	}
 
-	private void cambiarFrameInicioJugar() {
+	private void empezarJuego() {
+		juegoService.guardarJugador(juego, nombreInput.getText());
 		frmInicio.setVisible(false);
 		frmJuegoDelAhorcado.setVisible(true);
 		;
@@ -280,8 +284,15 @@ public class interfazMain {
 		frmJuegoDelAhorcado.getContentPane().setLayout(null);
 	}
 
-	// FrameInicio
+	private void inicializarLabelNombreJugador() {
+		lblNombreJugador = new JLabel(juegoService.getNombreJugador(juego));
+		lblNombreJugador.setForeground(new Color(204, 51, 51));
+		lblNombreJugador.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblNombreJugador.setBounds(10, 50, 345, 51);
+		frmJuegoDelAhorcado.getContentPane().add(lblNombreJugador);
+	}
 
+	// FrameInicio
 	private void inicializarBTNJugar() {
 		btnJugar = new JButton("Jugar");
 		btnJugar.setFont(new Font("Tahoma", Font.PLAIN, 30));

@@ -1,16 +1,20 @@
 package programa.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public class Jugador {
 
 	private String nombre;
 	private List<Record> records;
 
-	public Usuario(String nombre, List<Record> records) {
-
+	public Jugador(String nombre) {
 		this.nombre = nombre;
-		this.records = records;
+		this.records = new ArrayList<Record>();
+	}
+
+	public void agregarRecord(Record record) {
+		this.records.add(record);
 	}
 
 	public String getNombre() {
