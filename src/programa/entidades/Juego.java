@@ -16,6 +16,7 @@ public class Juego {
 	private int intentos;
 	private boolean finJuego;
 	private String mensaje;
+	private String dificultad;
 
 	public Juego(List<String> palabras, String idioma, String palabraEnJuego) {
 		this.palabras = palabras;
@@ -25,6 +26,7 @@ public class Juego {
 		this.intentos = 5;
 		this.finJuego = false;
 		this.mensaje = " ";
+		this.dificultad = "Normal"; // default
 		this.setLetrasMarcadas(new HashSet<String>());
 		rellenarVacio(palabraEnJuego.length());
 	}
@@ -141,6 +143,14 @@ public class Juego {
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public String getDificultad() {
+		return dificultad;
+	}
+
+	public void setDificultad(String dificultad) {
+		this.dificultad = dificultad;
 	}
 
 }
