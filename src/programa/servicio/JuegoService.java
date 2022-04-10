@@ -40,39 +40,60 @@ public class JuegoService {
 		String palabraJuego = juego.getPalabraEnJuego();
 		input = input.toUpperCase();
 
-		// Palabra completa
-		if (input.length() == palabraJuego.length()) {
-			if (sonIguales(juego, input)) {
-				sumarPuntosPalabraCompleta(juego);
-				juego.rellenarPalabraCompleta();
-				juego.setMensaje("Adivinaste!");
-				juego.setFinJuego(false);
-				return;
-			}
-			juego.setIntentos(0);
-		}
+		if (compararPalabraConInput(juego, input, palabraJuego))
+			return;
 
-		// Letra
-		if (input.length() == 1) {
-			if (!(posiciones(juego, input).isEmpty())) {
-
-				sumarPuntosLetra(juego, input);
-				juego.setMensaje("Muy bien!");
-				return;
-			}
-			juego.setMensaje("Fallaste :(");
+		if (input.length() != 1 && input.length() != palabraJuego.length()) {
 			restarIntento(juego);
+			juego.setMensaje("Debes poner un caracter o intentar adivinar la palabra completa");
+			return;
 		}
+		if (buscarLetraEnPalabra(juego, input))
+			return;
 
-		if (input.length() != 1 && input.length() != palabraJuego.length())
-			juego.setIntentos(0);
-
-		if (juego.getIntentos() <= 0) {
+		if (juego.getIntentos() == 0) {
 			juego.setMensaje("Perdiste :(");
 			juego.setFinJuego(true);
 		}
 
 		return;
+	}
+
+	private boolean buscarLetraEnPalabra(Juego juego, String input) {
+		if (input.length() == 1) {
+			if (isLetraInPalabra(juego, input)) {
+				sumarPuntosLetra(juego, input);
+				if (sonIguales(juego, getLetrasPorCompletar(juego))) {
+					juego.setFinJuego(true);
+					juego.setMensaje("Adivinaste!");
+				} else {
+					juego.setMensaje("Muy bien!");
+				}
+				return true;
+			}
+			juego.setMensaje("Fallaste :(");
+			restarIntento(juego);
+		}
+		return false;
+	}
+
+	private boolean compararPalabraConInput(Juego juego, String input, String palabraJuego) {
+		if (input.length() == palabraJuego.length()) {
+			if (sonIguales(juego, input)) {
+				sumarPuntosPalabraCompleta(juego);
+				juego.rellenarPalabraCompleta();
+				juego.setMensaje("Adivinaste!");
+				juego.setIntentos(0);
+				juego.setFinJuego(true);
+				return true;
+			} else {
+				System.out.println("asdas");
+				juego.setIntentos(0);
+				juego.setFinJuego(true);
+
+			}
+		}
+		return false;
 	}
 
 	private void restarIntento(Juego juego) {
@@ -92,8 +113,8 @@ public class JuegoService {
 		}
 	}
 
-	public List<Integer> posiciones(Juego juego, String input) {
-		List<Integer> posiciones = new ArrayList<Integer>();
+	private boolean isLetraInPalabra(Juego juego, String input) {
+		boolean ret = false;
 		if (!juego.getLetrasMarcadas().contains(input)) {
 			String palabraJuego = juego.getPalabraEnJuego();
 			char inputLetra = input.charAt(0);
@@ -102,11 +123,11 @@ public class JuegoService {
 				if (letra == inputLetra) {
 					juego.rellenarLetra(letra, i);
 					juego.getLetrasMarcadas().add(input);
-					posiciones.add(i);
+					ret = true;
 				}
 			}
 		}
-		return posiciones;
+		return ret;
 	}
 
 	private boolean sonIguales(Juego juego, String input) {

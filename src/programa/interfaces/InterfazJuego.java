@@ -33,6 +33,9 @@ public class InterfazJuego {
 	private Juego juego;
 	private JuegoService juegoService = new JuegoService();
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void iniciarJuego() {
 		juego = juegoService.crearJuego();
 
@@ -193,8 +196,8 @@ public class InterfazJuego {
 
 	private void inicializarBTNReiniciar() {
 		btnReset = new JButton("REINICIAR");
-		btnReset.setForeground(new Color(255, 255, 255));
-		btnReset.setBackground(new Color(51, 51, 102));
+		btnReset.setForeground(Color.BLACK);
+		btnReset.setBackground(Color.WHITE);
 		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		btnReset.setBounds(873, 15, 125, 51);
 		frmJuegoDelAhorcado.getContentPane().add(btnReset);
