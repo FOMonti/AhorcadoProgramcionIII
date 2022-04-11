@@ -6,9 +6,9 @@ import javax.swing.UIManager;
 
 public class Interfaz {
 
-	private static final InterfazInicio interfazInicio = new InterfazInicio();
-	private static final InterfazJuego interfazJuego = new InterfazJuego();
-	private static final InterfazRecord interfazRecord = new InterfazRecord();
+	private final InterfazInicio interfazInicio = new InterfazInicio();
+	private final InterfazJuego interfazJuego = new InterfazJuego();
+	private final InterfazRecord interfazRecord = new InterfazRecord();
 
 	public static void main(String[] args) {
 		try {
