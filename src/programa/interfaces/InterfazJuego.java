@@ -41,20 +41,9 @@ public class InterfazJuego {
 	public void iniciarJuego(InterfazRecord interfazRecord) {
 
 		this.interfazRecord = interfazRecord;
-
-		inicializarFrameJuego();
-
-		inicializarLabelUserInput();
-
-		inicializarTextFieldInput();
-
-		inicializarPalabraContainer();
-
-		inicializarBTNReiniciar();
-
-		inicializarLabelTitulo();
-
-		inicializarBTNRecords();
+		
+		inicializarJFrame();
+		
 
 		userInput.addActionListener(new ActionListener() {
 			// Cuando el usuario presiona ENTER al ingresar una palabra o letra
@@ -101,6 +90,22 @@ public class InterfazJuego {
 
 		// PRESIONAR BOTON Records
 
+	}
+	
+	private void inicializarJFrame() {
+		inicializarFrameJuego();
+
+		inicializarLabelUserInput();
+
+		inicializarTextFieldInput();
+
+		inicializarPalabraContainer();
+
+		inicializarBTNReiniciar();
+
+		inicializarLabelTitulo();
+
+		inicializarBTNRecords();
 	}
 
 	private void mostrarRecords() {

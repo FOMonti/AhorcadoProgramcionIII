@@ -34,23 +34,7 @@ public class InterfazInicio {
 	public void menu(InterfazJuego interfazJuego) {
 		this.interfazJuego = interfazJuego;
 
-		inicializarInicio();
-
-		inicializarBTNJugar();
-
-		inicializarLabelDificultad();
-
-		inicializarLabelError();
-
-		inicializarRadioBTNDificil();
-
-		inicializarRadioBTNNormal();
-
-		inicializarLabelNombre();
-
-		inicializarTextFieldNombre();
-
-		inicializarLabelTituloInicio();
+		inicializarJFrame();
 
 		btnJugar.addActionListener(new ActionListener() {
 
@@ -82,6 +66,26 @@ public class InterfazInicio {
 		frmInicio.setVisible(false);
 		interfazJuego.empezarJuego(nombreInput.getText(), dificultad);
 		;
+	}
+	
+	private void inicializarJFrame() {
+		inicializarInicio();
+
+		inicializarBTNJugar();
+
+		inicializarLabelDificultad();
+
+		inicializarLabelError();
+
+		inicializarRadioBTNDificil();
+
+		inicializarRadioBTNNormal();
+
+		inicializarLabelNombre();
+
+		inicializarTextFieldNombre();
+
+		inicializarLabelTituloInicio();
 	}
 
 	private void inicializarBTNJugar() {
