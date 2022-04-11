@@ -16,14 +16,24 @@ public class JuegoService {
 		return new Juego(palabras, "Spanish", palabraRandom, dificultad);
 	}
 
+	public void actualizarJuego(Juego juego) {
+		juego.reiniciarJuego(palabraRandom(juego.getPalabras().size(), juego.getPalabras()));
+	}
+
 	public void guardarJugador(Juego juego, String nombre) {
 		Jugador jugador = new Jugador(nombre);
 		juego.setJugador(jugador);
 	}
 
 	public void guardarRecord(Juego juego) {
-		Record record = new Record(juego.getPuntajeEnJuego(), juego.isJugadorWin(), juego.getPalabraEnJuego());
-		juego.getJugador().agregarRecord(record);
+		boolean gano = false;
+		if (sonIguales(juego, getLetrasPorCompletar(juego))) {
+			gano = true;
+		}
+		Record record = new Record(juego.getPuntajeEnJuego(), gano, juego.getPalabraEnJuego());
+		List<Record> records = juego.getJugador().getRecords();
+		records.add(record);
+		juego.getJugador().setRecords(records);
 	}
 
 	public List<String> cargarPalabras(String dificultad) {
@@ -40,9 +50,10 @@ public class JuegoService {
 		String palabraJuego = juego.getPalabraEnJuego();
 		input = input.toUpperCase();
 
-		if (compararPalabraConInput(juego, input, palabraJuego))
+		if (compararPalabraConInput(juego, input, palabraJuego)) {
+			guardarRecord(juego);
 			return;
-
+		}
 		if (input.length() != 1 && input.length() != palabraJuego.length()) {
 			restarIntento(juego);
 			juego.setMensaje("Debes poner un caracter o intentar \n adivinar la palabra completa");
@@ -54,6 +65,7 @@ public class JuegoService {
 
 		if (juego.getIntentos() == 0) {
 			juego.setMensaje("Perdiste :(");
+			guardarRecord(juego);
 			juego.setFinJuego(true);
 		}
 
@@ -65,6 +77,7 @@ public class JuegoService {
 			if (isLetraInPalabra(juego, input)) {
 				sumarPuntosLetra(juego, input);
 				if (sonIguales(juego, getLetrasPorCompletar(juego))) {
+					guardarRecord(juego);
 					juego.setFinJuego(true);
 					juego.setMensaje("Adivinaste!");
 				} else {
@@ -88,7 +101,6 @@ public class JuegoService {
 				juego.setFinJuego(true);
 				return true;
 			} else {
-				System.out.println("asdas");
 				juego.setIntentos(0);
 				juego.setFinJuego(true);
 

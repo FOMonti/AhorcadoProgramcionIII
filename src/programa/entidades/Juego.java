@@ -31,6 +31,15 @@ public class Juego {
 		rellenarVacio(palabraEnJuego.length());
 	}
 
+	public void reiniciarJuego(String palabraEnJuego) {
+		this.finJuego = false;
+		this.intentos = 5;
+		this.mensaje = " ";
+		this.setLetrasMarcadas(new HashSet<String>());
+		this.palabraEnJuego = palabraEnJuego;
+		rellenarVacio(palabraEnJuego.length());
+	}
+
 	private void rellenarVacio(int longitud) {
 		this.letrasPorCompletar = new char[longitud];
 		for (int i = 0; i < longitud; i++) {

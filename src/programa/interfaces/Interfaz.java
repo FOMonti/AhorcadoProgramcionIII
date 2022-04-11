@@ -7,7 +7,8 @@ import javax.swing.UIManager;
 public class Interfaz {
 
 	private static final InterfazInicio interfazInicio = new InterfazInicio();
-	private static final InterfazJuego interfazjuego = new InterfazJuego();
+	private static final InterfazJuego interfazJuego = new InterfazJuego();
+	private static final InterfazRecord interfazRecord = new InterfazRecord();
 
 	public static void main(String[] args) {
 		try {
@@ -34,8 +35,8 @@ public class Interfaz {
 	}
 
 	private void initialize() {
-		interfazInicio.menu(interfazjuego);
-		interfazjuego.iniciarJuego();
+		interfazInicio.menu(interfazJuego);
+		interfazJuego.iniciarJuego(interfazRecord);
 	}
 
 }

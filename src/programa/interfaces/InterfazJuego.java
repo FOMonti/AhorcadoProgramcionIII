@@ -28,19 +28,21 @@ public class InterfazJuego {
 	private JLabel labelUserInput;
 	private JTextField userInput;
 	private JButton btnReset;
+	private JButton btnRecord;
 	private JPanel palabraContainer;
 
 	private Juego juego;
 	private JuegoService juegoService = new JuegoService();
+	private InterfazRecord interfazRecord;
 
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public void iniciarJuego() {
+	public void iniciarJuego(InterfazRecord interfazRecord) {
+
+		this.interfazRecord = interfazRecord;
 
 		inicializarFrameJuego();
-
-		// inicializarLabelMensaje();
 
 		inicializarLabelUserInput();
 
@@ -51,6 +53,8 @@ public class InterfazJuego {
 		inicializarBTNReiniciar();
 
 		inicializarLabelTitulo();
+
+		inicializarBTNRecords();
 
 		userInput.addActionListener(new ActionListener() {
 			// Cuando el usuario presiona ENTER al ingresar una palabra o letra
@@ -67,13 +71,23 @@ public class InterfazJuego {
 			}
 		});
 
+		btnRecord.addActionListener(new ActionListener() {
+
+			// Cuando el usuario hace CLICK en el boton de Records
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarRecords();
+			}
+		});
+
 		// PRESIONAR BOTON RESET
 		btnReset.addActionListener(new ActionListener() {
 
 			// Cuando el usuario hace CLICK en el boton de REINICIAR
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				juego = juegoService.crearJuego(juego.getDificultad());
+				// juego = juegoService.crearJuego(juego.getDificultad());
+				juegoService.actualizarJuego(juego);
 				palabraEnJuego.setText(juegoService.getLetrasPorCompletar(juego));
 				actualizarMensaje();
 				actualizarInput();
@@ -85,6 +99,13 @@ public class InterfazJuego {
 			}
 		});
 
+		// PRESIONAR BOTON Records
+
+	}
+
+	private void mostrarRecords() {
+		frmJuegoDelAhorcado.setVisible(false);
+		interfazRecord.mostrarRecords(juego);
 	}
 
 	public void empezarJuego(String nombre, String dificultad) {
@@ -195,6 +216,15 @@ public class InterfazJuego {
 		frmJuegoDelAhorcado.getContentPane().add(lblTituloDelJuego);
 	}
 
+	private void inicializarBTNRecords() {
+		btnRecord = new JButton("RECORDS");
+		btnReset.setForeground(Color.BLACK);
+		btnReset.setBackground(Color.WHITE);
+		btnRecord.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		btnRecord.setBounds(873, 77, 125, 51);
+		frmJuegoDelAhorcado.getContentPane().add(btnRecord);
+	}
+
 	private void inicializarBTNReiniciar() {
 		btnReset = new JButton("REINICIAR");
 		btnReset.setForeground(Color.BLACK);
@@ -223,5 +253,4 @@ public class InterfazJuego {
 		lblNombreJugador.setBounds(10, 50, 345, 51);
 		frmJuegoDelAhorcado.getContentPane().add(lblNombreJugador);
 	}
-
 }
