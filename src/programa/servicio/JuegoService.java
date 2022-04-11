@@ -17,8 +17,8 @@ public class JuegoService {
 
 	}
 
-	public Juego crearJuego(String dificultad) {
-		List<String> palabras = cargarPalabras(dificultad);
+	public Juego crearJuego(String dificultad, String idioma) {
+		List<String> palabras = cargarPalabras(dificultad, idioma);
 		Juego juego = new Juego(palabras, "Spanish", dificultad);
 		actualizarJuego(juego);
 		return juego;
@@ -41,12 +41,23 @@ public class JuegoService {
 		juego.getJugador().setRecords(records);
 	}
 
-	public List<String> cargarPalabras(String dificultad) {
+	public List<String> cargarPalabras(String dificultad, String idioma) {
 		List<String> palabras = new ArrayList<String>();
-		if (dificultad.equals("NORMAL")) {
-			palabras = Palabra.getPalabrasDificultadNormal();
+		
+		if (idioma.equals("ESPANOL")) {
+			if (dificultad.equals("NORMAL")) {
+				palabras = Palabra.getPalabrasDificultadNormal();
+			} else if (dificultad.equals("DIFICIL")) {
+				palabras = Palabra.getPalabrasDificultadDificil();
+			}
+		} else if (idioma.equals("INGLES")) {
+			if (dificultad.equals("NORMAL")) {
+				palabras = Palabra.getPalabrasDificultadNormalIngles();
+			} else if (dificultad.equals("DIFICIL")) {
+				palabras = Palabra.getPalabrasDificultadDificilIngles();
+			} 
 		} else {
-			palabras = Palabra.getPalabrasDificultadDificil();
+			palabras = Palabra.getPalabrasTest();
 		}
 		return palabras;
 	}
@@ -61,7 +72,7 @@ public class JuegoService {
 		if (input.length() != 1 && input.length() != palabraJuego.length()) {
 			partidaService.restarIntento(juego);
 			juego.setMensaje("Debes poner un caracter o intentar \n adivinar la palabra completa");
-			return;
+			//return; -> tira error, le das mucho al enter = intentos negativos
 		}
 
 		if (partidaService.buscarLetraEnPalabra(juego, input))

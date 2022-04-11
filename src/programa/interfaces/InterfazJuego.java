@@ -113,11 +113,12 @@ public class InterfazJuego {
 		interfazRecord.mostrarRecords(juego);
 	}
 
-	public void empezarJuego(String nombre, String dificultad) {
-		juego = juegoService.crearJuego(dificultad);
+	public void empezarJuego(String nombre, String dificultad, String idioma) {
+		juego = juegoService.crearJuego(dificultad, idioma);
 
 		juegoService.guardarJugador(juego, nombre);
 		juego.setDificultad(dificultad);
+		juego.setIdioma(idioma);
 		inicializarLabelNombreJugador(juegoService.getNombreJugador(juego));
 		inicializarLabelPalabraEnJuego();
 		inicializarLabelIntentos();

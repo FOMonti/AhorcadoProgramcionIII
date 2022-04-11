@@ -22,35 +22,51 @@ class JuegoTest {
 	@BeforeEach
 	public void inicializar() {
 		juegoService = new JuegoService();
-		juego = juegoService.crearJuego("NORMAL");
-		juego.setJugador(new Jugador("Tomas"));
+		juego = juegoService.crearJuego("TEST", "TEST");
+		juego.setJugador(new Jugador("Test"));
 		juego.getPartida().setPalabraEnJuego("PALABRA");
-		juego.getPartida().getLetrasPorCompletar();
-		
-		
-		
-		
 	}
+	
+	public int puntaje() {
+		return juego.getPartida().getPuntajeEnJuego();
+	}
+	
+	public int intentos() {
+		return juego.getPartida().getIntentos();
+	}
+	
+	public String palabra() {
+		return juego.getPartida().getPalabraEnJuego();
+	}
+	
+	public String letrasPorCompletar() {
+		String str = "";
+		for(char c: juego.getPartida().getLetrasPorCompletar()) {
+			str = str + c;
+		}
+		return str;
+	}
+
 
 	@Test
 	public void puntajeTest() {
 		juegoService.jugar(juego, "p");
-		assertEquals("PUNTAJE: 50", juegoService.getPuntaje(juego));
+		assertEquals(50, puntaje());
 	}
 
 	@Test
 	public void letraRepetidaTest() {
 		juegoService.jugar(juego, "p");
 		juegoService.jugar(juego, "p");
-		assertEquals("PUNTAJE: 50", juegoService.getPuntaje(juego));
-		assertEquals("INTENTOS: 4", juegoService.getIntentos(juego));
+		assertEquals(50, puntaje());
+		assertEquals(4, intentos());
 	}
 
 	// ARREGLADO
 	@Test
 	public void multiplicadorTest() {
-		juegoService.jugar(juego, "palabra");
-		assertEquals(700, juegoService.getPuntaje(juego));
+		juegoService.jugar(juego, "PALABRA");
+		assertEquals(700, puntaje());
 	}
 
 	// ARREGLADO
@@ -59,37 +75,36 @@ class JuegoTest {
 		juegoService.jugar(juego, "p");
 		juegoService.jugar(juego, "a");
 		juegoService.jugar(juego, "PALABRA");
-		assertEquals(500, juegoService.getPuntaje(juego));
+		assertEquals(500, puntaje());
 	}
 
 	@Test
 	public void restarIntentoTest() {
 		juegoService.jugar(juego, "a");
-		assertEquals("INTENTOS: 5", juegoService.getIntentos(juego));
+		assertEquals(5, intentos());
 		juegoService.jugar(juego, "u");
-		assertEquals("INTENTOS: 4", juegoService.getIntentos(juego));
+		assertEquals(4, intentos());
 		assertFalse(juegoService.finJuego(juego));
 	}
 
 	@Test
 	public void restarIntentosPalabraCompletaTest() {
 		juegoService.jugar(juego, "WAKANDA"); // PALABRA
-		assertEquals("INTENTOS: 0", juegoService.getIntentos(juego));
+		assertEquals(0, intentos());
 		assertTrue(juegoService.finJuego(juego));
 	}
 
 	@Test
 	public void letrasMarcadasTest() {
 		juegoService.jugar(juego, "a");
-		assertEquals(1, partida.getLetrasMarcadas().size());
+		assertEquals(1, juego.getPartida().getLetrasMarcadas().size());
 	}
 
 	@Test
 	public void letrasPorCompletarTest() {
-		
-		assertEquals(juego.getPartida().getPalabraEnJuego().length() , juego.getPartida().getLetrasPorCompletar().length);
+		assertEquals(palabra().length(), letrasPorCompletar().length());
 		juegoService.jugar(juego, "a");
-		assertEquals("-A-A--A", juego.getPartida().getLetrasPorCompletar());
+		assertEquals("-A-A--A", letrasPorCompletar());
 	}
 
 }

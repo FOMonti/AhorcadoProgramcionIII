@@ -16,6 +16,7 @@ public class InterfazInicio {
 
 	private InterfazJuego interfazJuego;
 	private String dificultad;
+	private String idioma;
 
 	private JFrame frmInicio;
 	private JLabel lblTituloInicio;
@@ -23,8 +24,11 @@ public class InterfazInicio {
 	private JLabel lblDificultad;
 	private JTextField nombreInput;
 	private final ButtonGroup buttonGroupDificultad = new ButtonGroup();
+	private final ButtonGroup buttonGroupIdioma = new ButtonGroup();
 	private JRadioButton rdbtnDificultadNormal;
 	private JRadioButton rdbtnDificultadDificil;
+	private JRadioButton rdbtnEspaol;
+	private JRadioButton rdbtnIngles;
 	private JButton btnJugar;
 	private JLabel lblError;
 
@@ -41,15 +45,31 @@ public class InterfazInicio {
 			// Cuando el usuario hace CLICK en el boton de Jugar
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				if (rdbtnDificultadNormal.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad normal
 					dificultad = "NORMAL";
-					cerrarInicio();
+					if(rdbtnEspaol.isSelected()) {
+						idioma = "ESPANOL";
+						cerrarInicio();
+					} else if (rdbtnIngles.isSelected()) {
+						idioma = "INGLES";
+						cerrarInicio();
+					}
+					
 				} else if (rdbtnDificultadDificil.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad dificil
 					dificultad = "DIFICIL";
-					cerrarInicio();
+					if(rdbtnEspaol.isSelected()) {
+						idioma = "ESPANOL";
+						cerrarInicio();
+					} else if (rdbtnIngles.isSelected()) {
+						idioma = "INGLES";
+						cerrarInicio();
+					}
 				}
+				
+				
 
 				// Si hay algo que el usuario no completo o selecciono...
 				lblError.setVisible(true);
@@ -64,7 +84,7 @@ public class InterfazInicio {
 
 	private void cerrarInicio() {
 		frmInicio.setVisible(false);
-		interfazJuego.empezarJuego(nombreInput.getText(), dificultad);
+		interfazJuego.empezarJuego(nombreInput.getText(), dificultad, idioma);
 		;
 	}
 	
@@ -80,6 +100,10 @@ public class InterfazInicio {
 		inicializarRadioBTNDificil();
 
 		inicializarRadioBTNNormal();
+		
+		inicializarRadioBTNEspanol();
+		
+		inicializarRadioBTNIngles();
 
 		inicializarLabelNombre();
 
@@ -93,7 +117,7 @@ public class InterfazInicio {
 		btnJugar.setBackground(Color.WHITE);
 		btnJugar.setForeground(Color.DARK_GRAY);
 		btnJugar.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnJugar.setBounds(423, 396, 159, 50);
+		btnJugar.setBounds(423, 395, 159, 50);
 		frmInicio.getContentPane().add(btnJugar);
 	}
 
@@ -101,7 +125,7 @@ public class InterfazInicio {
 		lblDificultad = new JLabel("Ingrese la dificultad:");
 		lblDificultad.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblDificultad.setForeground(new Color(255, 255, 255));
-		lblDificultad.setBounds(237, 280, 286, 66);
+		lblDificultad.setBounds(237, 241, 286, 66);
 		frmInicio.getContentPane().add(lblDificultad);
 	}
 
@@ -109,7 +133,7 @@ public class InterfazInicio {
 		rdbtnDificultadNormal = new JRadioButton("NORMAL");
 		buttonGroupDificultad.add(rdbtnDificultadNormal);
 		rdbtnDificultadNormal.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		rdbtnDificultadNormal.setBounds(529, 306, 108, 23);
+		rdbtnDificultadNormal.setBounds(529, 267, 108, 23);
 		rdbtnDificultadNormal.setBackground(new Color(0, 0, 51));
 		rdbtnDificultadNormal.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadNormal);
@@ -120,16 +144,36 @@ public class InterfazInicio {
 		rdbtnDificultadDificil = new JRadioButton("DIFICIL");
 		buttonGroupDificultad.add(rdbtnDificultadDificil);
 		rdbtnDificultadDificil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		rdbtnDificultadDificil.setBounds(639, 306, 93, 23);
+		rdbtnDificultadDificil.setBounds(639, 267, 93, 23);
 		rdbtnDificultadDificil.setBackground(new Color(0, 0, 51));
 		rdbtnDificultadDificil.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadDificil);
+	}
+	
+	private void inicializarRadioBTNEspanol() {
+		rdbtnEspaol = new JRadioButton("ESPAÑOL");
+		buttonGroupIdioma.add(rdbtnEspaol);
+		rdbtnEspaol.setForeground(Color.WHITE);
+		rdbtnEspaol.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		rdbtnEspaol.setBackground(new Color(0, 0, 51));
+		rdbtnEspaol.setBounds(498, 348, 108, 23);
+		frmInicio.getContentPane().add(rdbtnEspaol);
+	}
+	
+	private void inicializarRadioBTNIngles() {
+		rdbtnIngles = new JRadioButton("INGLES");
+		buttonGroupIdioma.add(rdbtnIngles);
+		rdbtnIngles.setForeground(Color.WHITE);
+		rdbtnIngles.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		rdbtnIngles.setBackground(new Color(0, 0, 51));
+		rdbtnIngles.setBounds(622, 348, 93, 23);
+		frmInicio.getContentPane().add(rdbtnIngles);
 	}
 
 	private void inicializarTextFieldNombre() {
 		nombreInput = new JTextField();
 		nombreInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		nombreInput.setBounds(529, 205, 210, 42);
+		nombreInput.setBounds(529, 169, 210, 42);
 		frmInicio.getContentPane().add(nombreInput);
 		nombreInput.setColumns(10);
 	}
@@ -138,8 +182,14 @@ public class InterfazInicio {
 		lblTituloInicio = new JLabel("MENU");
 		lblTituloInicio.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblTituloInicio.setForeground(new Color(255, 255, 255));
-		lblTituloInicio.setBounds(448, 99, 113, 66);
+		lblTituloInicio.setBounds(449, 67, 113, 66);
 		frmInicio.getContentPane().add(lblTituloInicio);
+		
+		JLabel lblIngreseElIdioma = new JLabel("Ingrese el idioma:");
+		lblIngreseElIdioma.setForeground(Color.WHITE);
+		lblIngreseElIdioma.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblIngreseElIdioma.setBounds(237, 318, 286, 66);
+		frmInicio.getContentPane().add(lblIngreseElIdioma);
 
 	}
 
@@ -147,7 +197,7 @@ public class InterfazInicio {
 		lblError = new JLabel("Complete y/o seleccione todos los campos.");
 		lblError.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblError.setForeground(Color.RED);
-		lblError.setBounds(309, 481, 389, 66);
+		lblError.setBounds(308, 456, 389, 66);
 		lblError.setVisible(false);
 		frmInicio.getContentPane().add(lblError);
 
@@ -157,7 +207,7 @@ public class InterfazInicio {
 		lblNombre = new JLabel("Ingrese su nombre: ");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblNombre.setForeground(new Color(255, 255, 255));
-		lblNombre.setBounds(237, 191, 271, 66);
+		lblNombre.setBounds(237, 155, 271, 66);
 		frmInicio.getContentPane().add(lblNombre);
 	}
 
