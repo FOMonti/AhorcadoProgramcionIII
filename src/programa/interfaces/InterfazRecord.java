@@ -72,6 +72,7 @@ public class InterfazRecord {
 		frmRecord.getContentPane().setLayout(null);
 		frmRecord.setBounds(200, 100, 1024, 673);
 		frmRecord.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRecord.setLocationRelativeTo(null);
 	}
 
 	private void inicializarTable() {

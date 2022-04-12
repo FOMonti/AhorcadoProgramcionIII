@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class InterfazInicio {
 
@@ -115,7 +116,7 @@ public class InterfazInicio {
 		btnJugar.setBackground(Color.WHITE);
 		btnJugar.setForeground(Color.DARK_GRAY);
 		btnJugar.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnJugar.setBounds(423, 395, 159, 50);
+		btnJugar.setBounds(261, 382, 130, 50);
 		frmInicio.getContentPane().add(btnJugar);
 	}
 
@@ -123,7 +124,7 @@ public class InterfazInicio {
 		lblDificultad = new JLabel("Ingrese la dificultad:");
 		lblDificultad.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblDificultad.setForeground(new Color(255, 255, 255));
-		lblDificultad.setBounds(237, 241, 286, 66);
+		lblDificultad.setBounds(45, 232, 286, 66);
 		frmInicio.getContentPane().add(lblDificultad);
 	}
 
@@ -131,7 +132,7 @@ public class InterfazInicio {
 		rdbtnDificultadNormal = new JRadioButton("NORMAL");
 		buttonGroupDificultad.add(rdbtnDificultadNormal);
 		rdbtnDificultadNormal.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		rdbtnDificultadNormal.setBounds(529, 267, 108, 23);
+		rdbtnDificultadNormal.setBounds(383, 258, 108, 23);
 		rdbtnDificultadNormal.setBackground(new Color(0, 0, 51));
 		rdbtnDificultadNormal.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadNormal);
@@ -142,7 +143,7 @@ public class InterfazInicio {
 		rdbtnDificultadDificil = new JRadioButton("DIFICIL");
 		buttonGroupDificultad.add(rdbtnDificultadDificil);
 		rdbtnDificultadDificil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		rdbtnDificultadDificil.setBounds(639, 267, 93, 23);
+		rdbtnDificultadDificil.setBounds(522, 258, 93, 23);
 		rdbtnDificultadDificil.setBackground(new Color(0, 0, 51));
 		rdbtnDificultadDificil.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadDificil);
@@ -154,7 +155,7 @@ public class InterfazInicio {
 		rdbtnEspaol.setForeground(Color.WHITE);
 		rdbtnEspaol.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		rdbtnEspaol.setBackground(new Color(0, 0, 51));
-		rdbtnEspaol.setBounds(498, 348, 108, 23);
+		rdbtnEspaol.setBounds(383, 335, 108, 23);
 		frmInicio.getContentPane().add(rdbtnEspaol);
 	}
 
@@ -164,29 +165,30 @@ public class InterfazInicio {
 		rdbtnIngles.setForeground(Color.WHITE);
 		rdbtnIngles.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		rdbtnIngles.setBackground(new Color(0, 0, 51));
-		rdbtnIngles.setBounds(622, 348, 93, 23);
+		rdbtnIngles.setBounds(522, 335, 93, 23);
 		frmInicio.getContentPane().add(rdbtnIngles);
 	}
 
 	private void inicializarTextFieldNombre() {
 		nombreInput = new JTextField();
 		nombreInput.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		nombreInput.setBounds(529, 169, 210, 42);
+		nombreInput.setBounds(383, 169, 232, 42);
 		frmInicio.getContentPane().add(nombreInput);
 		nombreInput.setColumns(10);
 	}
 
 	private void inicializarLabelTituloInicio() {
 		lblTituloInicio = new JLabel("MENU");
+		lblTituloInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTituloInicio.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblTituloInicio.setForeground(new Color(255, 255, 255));
-		lblTituloInicio.setBounds(449, 67, 113, 66);
+		lblTituloInicio.setBounds(261, 64, 130, 66);
 		frmInicio.getContentPane().add(lblTituloInicio);
 
 		JLabel lblIngreseElIdioma = new JLabel("Ingrese el idioma:");
 		lblIngreseElIdioma.setForeground(Color.WHITE);
 		lblIngreseElIdioma.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblIngreseElIdioma.setBounds(237, 318, 286, 66);
+		lblIngreseElIdioma.setBounds(45, 305, 286, 66);
 		frmInicio.getContentPane().add(lblIngreseElIdioma);
 
 	}
@@ -205,7 +207,7 @@ public class InterfazInicio {
 		lblNombre = new JLabel("Ingrese su nombre: ");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblNombre.setForeground(new Color(255, 255, 255));
-		lblNombre.setBounds(237, 155, 271, 66);
+		lblNombre.setBounds(45, 155, 271, 66);
 		frmInicio.getContentPane().add(lblNombre);
 	}
 
@@ -217,9 +219,10 @@ public class InterfazInicio {
 		frmInicio.setForeground(new Color(0, 0, 0));
 		frmInicio.setBackground(new Color(0, 0, 0));
 		frmInicio.getContentPane().setBackground(new Color(0, 0, 51));
-		frmInicio.setBounds(200, 100, 1024, 673);
+		frmInicio.setBounds(200, 100, 680, 500);
 		frmInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInicio.getContentPane().setLayout(null);
+		frmInicio.setLocationRelativeTo(null);
 		frmInicio.setVisible(true);
 	}
 }

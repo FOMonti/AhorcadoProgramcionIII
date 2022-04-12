@@ -119,11 +119,11 @@ public class PartidaService {
 	}
 
 	public String getIntentos(Juego juego) {
-		return "INTENTOS: " + juego.getPartida().getIntentos();
+		return "" + juego.getPartida().getIntentos();
 	}
 
 	public String getPuntaje(Juego juego) {
-		return "PUNTAJE: " + juego.getPartida().getPuntajeEnJuego();
+		return "" + juego.getPartida().getPuntajeEnJuego();
 	}
 
 }

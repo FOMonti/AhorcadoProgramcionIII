@@ -143,11 +143,11 @@ public class InterfazJuego {
 //	  Metodos de limpiar variables
 
 	private void actualizarIntentos() {
-		lblIntentos.setText(juegoService.getIntentos(juego));
+		lblIntentos.setText("INTENTOS: " + juegoService.getIntentos(juego));
 	}
 
 	private void actualizarPuntaje() {
-		lblPuntaje.setText(juegoService.getPuntaje(juego));
+		lblPuntaje.setText("PUNTAJE: " + juegoService.getPuntaje(juego));
 	}
 
 	private void actualizarMensaje() {
@@ -194,7 +194,7 @@ public class InterfazJuego {
 	}
 
 	private void inicializarLabelIntentos() {
-		lblIntentos = new JLabel(juegoService.getIntentos(juego));
+		lblIntentos = new JLabel("INTENTOS: " + juegoService.getIntentos(juego));
 		lblIntentos.setForeground(new Color(204, 51, 51));
 		lblIntentos.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblIntentos.setBounds(10, 11, 345, 51);
@@ -202,7 +202,7 @@ public class InterfazJuego {
 	}
 
 	private void inicializarLabelPuntaje() {
-		lblPuntaje = new JLabel(juegoService.getPuntaje(juego));
+		lblPuntaje = new JLabel("PUNTAJE: " + juegoService.getPuntaje(juego));
 		lblPuntaje.setForeground(new Color(51, 204, 51));
 		lblPuntaje.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblPuntaje.setBounds(430, 11, 345, 51);
@@ -254,6 +254,7 @@ public class InterfazJuego {
 		frmJuegoDelAhorcado.setBounds(200, 100, 1024, 673);
 		frmJuegoDelAhorcado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmJuegoDelAhorcado.getContentPane().setLayout(null);
+		frmJuegoDelAhorcado.setLocationRelativeTo(null);
 	}
 
 	private void inicializarLabelNombreJugador(String nombre) {
