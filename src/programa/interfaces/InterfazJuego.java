@@ -33,17 +33,16 @@ public class InterfazJuego {
 
 	private Juego juego;
 	private JuegoService juegoService = new JuegoService();
-	private InterfazRecord interfazRecord;
+	public static InterfazRecord interfazRecord;
 
 	/**
 	 * @wbp.parser.entryPoint
 	 */
 	public void iniciarJuego(InterfazRecord interfazRecord) {
 
-		this.interfazRecord = interfazRecord;
-		
+		InterfazJuego.interfazRecord = interfazRecord;
+
 		inicializarJFrame();
-		
 
 		userInput.addActionListener(new ActionListener() {
 			// Cuando el usuario presiona ENTER al ingresar una palabra o letra
@@ -91,7 +90,7 @@ public class InterfazJuego {
 		// PRESIONAR BOTON Records
 
 	}
-	
+
 	private void inicializarJFrame() {
 		inicializarFrameJuego();
 
@@ -110,16 +109,21 @@ public class InterfazJuego {
 
 	private void mostrarRecords() {
 		frmJuegoDelAhorcado.setVisible(false);
-		interfazRecord.mostrarRecords(juego);
+		interfazRecord.mostarRecords(juego, this);
+	}
+
+	public void seguirConJuego(InterfazRecord interfazRecordVolver) {
+		InterfazJuego.interfazRecord = interfazRecordVolver;
+		frmJuegoDelAhorcado.setVisible(true);
 	}
 
 	public void empezarJuego(String nombre, String dificultad, String idioma) {
 		juego = juegoService.crearJuego(dificultad, idioma);
 
 		juegoService.guardarJugador(juego, nombre);
-		juego.setDificultad(dificultad);
+		juego.setDificultad(dificultad); // comentar
 		juego.setIdioma(idioma);
-		inicializarLabelNombreJugador(juegoService.getNombreJugador(juego));
+		inicializarLabelNombreJugador("JUGADOR: " + juegoService.getNombreJugador(juego));
 		inicializarLabelPalabraEnJuego();
 		inicializarLabelIntentos();
 		inicializarLabelPuntaje();

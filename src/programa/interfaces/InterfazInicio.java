@@ -45,22 +45,22 @@ public class InterfazInicio {
 			// Cuando el usuario hace CLICK en el boton de Jugar
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (rdbtnDificultadNormal.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad normal
 					dificultad = "NORMAL";
-					if(rdbtnEspaol.isSelected()) {
+					if (rdbtnEspaol.isSelected()) {
 						idioma = "ESPANOL";
 						cerrarInicio();
 					} else if (rdbtnIngles.isSelected()) {
 						idioma = "INGLES";
 						cerrarInicio();
 					}
-					
+
 				} else if (rdbtnDificultadDificil.isSelected() && !nombreInput.getText().isEmpty()) {
 					// Setear dificultad dificil
 					dificultad = "DIFICIL";
-					if(rdbtnEspaol.isSelected()) {
+					if (rdbtnEspaol.isSelected()) {
 						idioma = "ESPANOL";
 						cerrarInicio();
 					} else if (rdbtnIngles.isSelected()) {
@@ -68,8 +68,6 @@ public class InterfazInicio {
 						cerrarInicio();
 					}
 				}
-				
-				
 
 				// Si hay algo que el usuario no completo o selecciono...
 				lblError.setVisible(true);
@@ -87,7 +85,7 @@ public class InterfazInicio {
 		interfazJuego.empezarJuego(nombreInput.getText(), dificultad, idioma);
 		;
 	}
-	
+
 	private void inicializarJFrame() {
 		inicializarInicio();
 
@@ -100,9 +98,9 @@ public class InterfazInicio {
 		inicializarRadioBTNDificil();
 
 		inicializarRadioBTNNormal();
-		
+
 		inicializarRadioBTNEspanol();
-		
+
 		inicializarRadioBTNIngles();
 
 		inicializarLabelNombre();
@@ -149,9 +147,9 @@ public class InterfazInicio {
 		rdbtnDificultadDificil.setForeground(new Color(255, 255, 255));
 		frmInicio.getContentPane().add(rdbtnDificultadDificil);
 	}
-	
+
 	private void inicializarRadioBTNEspanol() {
-		rdbtnEspaol = new JRadioButton("ESPAÃ‘OL");
+		rdbtnEspaol = new JRadioButton("ESPAÑOL");
 		buttonGroupIdioma.add(rdbtnEspaol);
 		rdbtnEspaol.setForeground(Color.WHITE);
 		rdbtnEspaol.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -159,7 +157,7 @@ public class InterfazInicio {
 		rdbtnEspaol.setBounds(498, 348, 108, 23);
 		frmInicio.getContentPane().add(rdbtnEspaol);
 	}
-	
+
 	private void inicializarRadioBTNIngles() {
 		rdbtnIngles = new JRadioButton("INGLES");
 		buttonGroupIdioma.add(rdbtnIngles);
@@ -184,7 +182,7 @@ public class InterfazInicio {
 		lblTituloInicio.setForeground(new Color(255, 255, 255));
 		lblTituloInicio.setBounds(449, 67, 113, 66);
 		frmInicio.getContentPane().add(lblTituloInicio);
-		
+
 		JLabel lblIngreseElIdioma = new JLabel("Ingrese el idioma:");
 		lblIngreseElIdioma.setForeground(Color.WHITE);
 		lblIngreseElIdioma.setFont(new Font("Tahoma", Font.PLAIN, 30));
